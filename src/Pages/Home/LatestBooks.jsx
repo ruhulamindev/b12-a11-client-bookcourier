@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const LatestBooks = () => {
   return (
-    <div className="mt-8 max-w-7xl mx-auto">
+    <div className="mt-12 max-w-7xl mx-auto">
       <h1 className="text-center text-2xl font-bold text-gray-900 md:text-4xl">
         Latest Books
       </h1>
