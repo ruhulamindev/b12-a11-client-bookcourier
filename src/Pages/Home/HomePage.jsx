@@ -1,12 +1,13 @@
 import React from "react";
-import MyContainer from './../../Components/Shared/MyContainer';
+import MyContainer from "./../../Components/Shared/MyContainer";
+import Banner from "./../Banner";
 
 const HomePage = () => {
   return (
     <div>
       <MyContainer>
-        <h1 className="text-center">This is Home Page</h1>
-        </MyContainer>
+        <Banner />
+      </MyContainer>
     </div>
   );
 };
