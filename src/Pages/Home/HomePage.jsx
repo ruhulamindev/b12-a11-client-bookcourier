@@ -1,13 +1,12 @@
 import React from "react";
-import MyContainer from "./../../Components/Shared/MyContainer";
 import Banner from "./../Banner";
+import LatestBooks from "./LatestBooks";
 
 const HomePage = () => {
   return (
     <div>
-      <MyContainer>
         <Banner />
-      </MyContainer>
+        <LatestBooks/>
     </div>
   );
 };
