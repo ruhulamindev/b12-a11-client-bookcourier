@@ -3,8 +3,9 @@ import { Fade } from "react-awesome-reveal";
 
 const About = () => {
   return (
-    <div className="mt-12 max-w-7xl mx-auto px-4 py-12 bg-[#f8f7ff] shadow-xl rounded border-gray-300">
-      <Fade direction="up" cascade damping={0.2} triggerOnce>
+    <div className="mt-12 p-2">
+    <div className="max-w-7xl mx-auto px-4 py-12 bg-[#f8f7ff] shadow-xl rounded border-gray-300">
+      <Fade direction="up" cascade damping={0.2} triggerOnce={false}>
         <h2 className="text-4xl font-bold text-center text-gray-900 mb-8">
           About BookCourier
         </h2>
@@ -21,6 +22,7 @@ const About = () => {
           updated with the latest releases without leaving your home.
         </p>
       </Fade>
+    </div>
     </div>
   );
 };

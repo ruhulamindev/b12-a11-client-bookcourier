@@ -16,7 +16,7 @@ const DeliveryCoverage = () => {
         <img
           src="/maps.avif"
           alt="Delivery Map"
-          className="w-full md:w-3/4 rounded-lg shadow-lg"
+          className="w-full h-[300px] md:h-[500px] rounded-lg shadow-lg cover"
         />
       </div>
 
