@@ -55,7 +55,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="mt-12 max-w-7xl mx-auto px-4">
+    <div className="mt-12 max-w-7xl mx-auto px-2">
       <h2 className="text-center text-3xl font-bold mb-8 text-gray-900">
         What Our Users Say
       </h2>

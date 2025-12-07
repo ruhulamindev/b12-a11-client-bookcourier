@@ -4,6 +4,7 @@ import LatestBooks from "./LatestBooks";
 import CoverageSection from "./CoverageSection";
 import WhyChoose from "./WhyChoose";
 import Review from "./Review";
+import About from "./About ";
 
 const HomePage = () => {
   return (
@@ -13,6 +14,7 @@ const HomePage = () => {
         <CoverageSection/>
         <WhyChoose/>
         <Review/>
+        <About/>
     </div>
   );
 };
