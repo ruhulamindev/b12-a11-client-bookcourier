@@ -3,6 +3,7 @@ import Banner from "./../Banner";
 import LatestBooks from "./LatestBooks";
 import CoverageSection from "./CoverageSection";
 import WhyChoose from "./WhyChoose";
+import Review from "./Review";
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
         <LatestBooks/>
         <CoverageSection/>
         <WhyChoose/>
+        <Review/>
     </div>
   );
 };
