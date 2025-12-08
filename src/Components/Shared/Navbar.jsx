@@ -9,7 +9,7 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/">Books</NavLink>
+        <NavLink to="/all-books">Books</NavLink>
       </li>
       <li>
         <NavLink to="/">Dashboard</NavLink>
@@ -53,8 +53,9 @@ const Navbar = () => {
         {links}
         </ul>
       </div>
-      <div className="navbar-end">
-        <a className="btn">Button</a>
+      <div className="navbar-end gap-2">
+        <NavLink to="/signin" className="btn">Signin</NavLink>
+        <NavLink to="/signup" className="btn">Signup</NavLink>
       </div>
     </div>
   );
