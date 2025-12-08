@@ -1,9 +1,10 @@
 import React from 'react';
+import LatestBooks from '../Home/LatestBooks';
 
 const AllBooks = () => {
     return (
         <div>
-            <h1>This is Books Page</h1>
+            <LatestBooks/>
         </div>
     );
 };
