@@ -6,6 +6,7 @@ import AllBooks from "../Pages/Books/AllBooks";
 import Signin from "../Pages/AuthenticationPage/Signin";
 import Signup from "../Pages/AuthenticationPage/Signup";
 import PrivateRoute from "./PrivateRoute";
+import DetailsPage from "../Pages/DetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,14 @@ export const router = createBrowserRouter([
         element:(
           <PrivateRoute>
             <AllBooks/>
+          </PrivateRoute>
+        )
+      },
+      {
+        path:"details",
+        element:(
+          <PrivateRoute>
+            <DetailsPage/>
           </PrivateRoute>
         )
       },

@@ -38,7 +38,7 @@ const LatestBooks = () => {
                 <GiSelfLove className="text-xl text-red-500" />
               </div>
               <div className="flex items-center gap-1 badge badge-outline">
-                <Link to="/" className="font-bold">
+                <Link to="/details" className="font-bold">
                   Details
                 </Link>
                 <IoArrowRedoCircleSharp className="text-xl text-red-500" />
@@ -74,7 +74,7 @@ const LatestBooks = () => {
                 <GiSelfLove className="text-xl text-red-500" />
               </div>
               <div className="flex items-center gap-1 badge badge-outline">
-                <Link to="/" className="font-bold">
+                <Link to="/details" className="font-bold">
                   Details
                 </Link>
                 <IoArrowRedoCircleSharp className="text-xl text-red-500" />
@@ -110,7 +110,7 @@ const LatestBooks = () => {
                 <GiSelfLove className="text-xl text-red-500" />
               </div>
               <div className="flex items-center gap-1 badge badge-outline">
-                <Link to="/" className="font-bold">
+                <Link to="/details" className="font-bold">
                   Details
                 </Link>
                 <IoArrowRedoCircleSharp className="text-xl text-red-500" />
