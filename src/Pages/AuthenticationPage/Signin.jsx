@@ -1,20 +1,50 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
+import useAuth from "../../Hooks/useAuth";
 
 const Signin = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // console.log("in the login",location)
+  // console.log("location in social",location)
+
+  // react fromstate and error handeling
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const { signInUser, googleSignin } = useAuth();
+
+  // email and password signin
   const handleSignin = (data) => {
     console.log(data);
+    signInUser(data.email, data.password)
+      .then((result) => {
+        console.log(result);
+        navigate(location?.state || "/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // google signin
+  const handleGoogleSignin = () => {
+    googleSignin()
+      .then((result) => {
+        console.log(result.user);
+        navigate(location.state || "/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
-    <div className="max-w-7xl mx-auto flex items-center justify-center p-4">
+    <div className="min-h-[70vh] mx-auto flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-100 rounded-2xl shadow-lg p-8">
         {/* Title */}
         <h1 className="text-2xl font-bold text-center mb-6">Sign In</h1>
@@ -86,7 +116,10 @@ const Signin = () => {
           <div className="flex-1 h-px bg-gray-300"></div>
         </div>
         {/* Google Login Button */}
-        <button className="w-full flex items-center justify-center gap-3 border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition">
+        <button
+          onClick={handleGoogleSignin}
+          className="w-full flex items-center justify-center gap-3 border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition"
+        >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="google logo"
@@ -98,10 +131,10 @@ const Signin = () => {
         <p className="text-center text-sm text-gray-600 mt-4">
           Don't have an account?
           <Link
+            state={location.state}
             to="/signup"
             className="text-blue-600 font-medium cursor-pointer hover:underline"
           >
-            {" "}
             Sign Up
           </Link>
         </p>
