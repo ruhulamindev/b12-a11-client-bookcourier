@@ -8,6 +8,7 @@ import Signup from "../Pages/AuthenticationPage/Signup";
 import PrivateRoute from "./PrivateRoute";
 import DetailsPage from "../Pages/DetailsPage";
 import Profile from "../Pages/Profile";
+import AddBook from "../Pages/Dashboard/Librarian/AddBook";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Profile />
+          </PrivateRoute>
+        ),
+      },
+            {
+        path: "add-book",
+        element: (
+          <PrivateRoute>
+            <AddBook />
           </PrivateRoute>
         ),
       },
