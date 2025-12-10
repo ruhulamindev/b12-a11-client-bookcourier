@@ -1,6 +1,6 @@
 import React from "react";
 
-const MyBooks = () => {
+const ManageBooks = () => {
   // Static books data (placeholder)
   const books = [
     {
@@ -10,7 +10,7 @@ const MyBooks = () => {
       price: "$25",
       status: "Published",
       image:
-        "https://st.depositphotos.com/1643295/3583/i/450/depositphotos_35837089-stock-photo-photo-of-you.jpg",
+        "https://images.unsplash.com/photo-1581091215363-4b7c7cd0ef6e?auto=format&fit=crop&w=80&h=80",
     },
     {
       id: 2,
@@ -19,7 +19,7 @@ const MyBooks = () => {
       price: "$30",
       status: "Unpublished",
       image:
-        "https://st.depositphotos.com/1643295/3583/i/450/depositphotos_35837089-stock-photo-photo-of-you.jpg",
+        "https://images.unsplash.com/photo-1581093588401-1e4b6e7f24ee?auto=format&fit=crop&w=80&h=80",
     },
     {
       id: 3,
@@ -28,13 +28,13 @@ const MyBooks = () => {
       price: "$20",
       status: "Published",
       image:
-        "https://st.depositphotos.com/1643295/3583/i/450/depositphotos_35837089-stock-photo-photo-of-you.jpg",
+        "https://images.unsplash.com/photo-1590608897129-79a0d3e0ff86?auto=format&fit=crop&w=80&h=80",
     },
   ];
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-6">My Books</h1>
+      <h1 className="text-3xl font-bold mb-6">Manage Books</h1>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-lg shadow">
@@ -64,17 +64,7 @@ const MyBooks = () => {
                 <td className="py-3 px-4">{book.name}</td>
                 <td className="py-3 px-4">{book.category}</td>
                 <td className="py-3 px-4">{book.price}</td>
-                <td className="py-3 px-4">
-                  <span
-                    className={`px-2 py-1 rounded-full text-white font-medium ${
-                      book.status === "Published"
-                        ? "bg-green-500"
-                        : "bg-gray-500"
-                    }`}
-                  >
-                    {book.status}
-                  </span>
-                </td>
+                <td className="py-3 px-4">{book.status}</td>
                 <td className="py-3 px-4 flex gap-2">
                   <button className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">
                     Update
@@ -92,4 +82,4 @@ const MyBooks = () => {
   );
 };
 
-export default MyBooks;
+export default ManageBooks;

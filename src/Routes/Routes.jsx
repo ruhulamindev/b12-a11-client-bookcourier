@@ -11,6 +11,14 @@ import Profile from "../Pages/Profile";
 import AddBook from "../Pages/Dashboard/Librarian/AddBook";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Statistics from "../Pages/Dashboard/Statistics";
+import MyOrders from "../Pages/Dashboard/User/MyOrders";
+import MyBooks from "../Pages/Dashboard/Librarian/MyBooks";
+import ManageOrders from "../Pages/Dashboard/Librarian/ManageOrders";
+import Invoices from "../Pages/Dashboard/User/Invoices";
+import Wishlist from "../Pages/Dashboard/User/Wishlist";
+import SellerRequest from "../Pages/Dashboard/User/SellerRequest";
+import AllUsers from "../Pages/Dashboard/Admin/AllUsers";
+import ManageBooks from "../Pages/Dashboard/Admin/ManageBooks";
 
 export const router = createBrowserRouter([
   {
@@ -66,19 +74,19 @@ export const router = createBrowserRouter([
     children: [
       // --- User Routes ---
     { index: true, element: <Statistics/> },
-    { path: "my-orders", element: <p>My Orders Page</p> },
-    { path: "invoices", element: <p>Invoices Page</p> },
-    { path: "wishlist", element: <p>My Wishlist Page</p> },
-    { path: "seller-request", element: <p>Become A Seller</p> },
+    { path: "my-orders", element: <MyOrders/> },
+    { path: "invoices", element: <Invoices/> },
+    { path: "wishlist", element: <Wishlist/> },
+    { path: "seller-request", element: <SellerRequest/> },
     
     // --- Librarian Routes ---
     { path: "add-book", element: <AddBook /> },
-    { path: "my-books", element: <p>My Books Page</p> },
-    { path: "manage-orders", element: <p>Librarian Orders Page</p> },
+    { path: "my-books", element: <MyBooks/> },
+    { path: "manage-orders", element:<ManageOrders/> },
     
     // --- Admin Routes ---
-    { path: "all-users", element: <p>All Users Page</p> },
-    { path: "manage-books", element: <p>Manage Books Page</p> },
+    { path: "all-users", element: <AllUsers/> },
+    { path: "manage-books", element: <ManageBooks/> },
     { path: "profile", element: <Profile /> },
     ],
   },

@@ -68,7 +68,7 @@ const DashboardLayout = () => {
       </div>
       {/* left sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-screen w-64 bg-white shadow-lg p-6 transform transition-transform duration-300 
+        className={`fixed top-0 left-0 h-screen overflow-y-auto w-64 bg-white shadow-lg p-6 transform transition-transform duration-300 
         ${isOpen ? "translate-x-0" : "-translate-x-full"} 
         lg:translate-x-0 lg:static lg:block z-50`}
       >
@@ -133,14 +133,14 @@ const DashboardLayout = () => {
 
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-40 lg:hidden z-40"
+          className="fixed inset-0  bg-opacity-40 lg:hidden z-40"
           onClick={() => setIsOpen(false)}
         ></div>
       )}
 
       {/* right content */}
-      <main className="flex-1 p-8 mt-16 lg:mt-0">
-        <div className="bg-[#e9ecef] rounded-lg shadow p-6">
+      <main className="flex-1 p-6 mt-16 h-screen overflow-y-auto lg:mt-0">
+        <div className="bg-[#e9ecef] rounded-lg shadow p-2">
           <Outlet />
         </div>
       </main>

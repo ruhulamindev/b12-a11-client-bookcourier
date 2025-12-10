@@ -1,40 +1,37 @@
 import React from "react";
 
-const MyBooks = () => {
-  // Static books data (placeholder)
-  const books = [
+const Wishlist = () => {
+  // Static wishlist data (placeholder)
+  const wishlist = [
     {
       id: 1,
       name: "JavaScript Basics",
       category: "Programming",
       price: "$25",
-      status: "Published",
       image:
-        "https://st.depositphotos.com/1643295/3583/i/450/depositphotos_35837089-stock-photo-photo-of-you.jpg",
+        "https://images.unsplash.com/photo-1581091215363-4b7c7cd0ef6e?auto=format&fit=crop&w=80&h=80",
     },
     {
       id: 2,
       name: "React for Beginners",
       category: "Web Development",
       price: "$30",
-      status: "Unpublished",
       image:
-        "https://st.depositphotos.com/1643295/3583/i/450/depositphotos_35837089-stock-photo-photo-of-you.jpg",
+        "https://images.unsplash.com/photo-1581093588401-1e4b6e7f24ee?auto=format&fit=crop&w=80&h=80",
     },
     {
       id: 3,
       name: "CSS Mastery",
       category: "Design",
       price: "$20",
-      status: "Published",
       image:
-        "https://st.depositphotos.com/1643295/3583/i/450/depositphotos_35837089-stock-photo-photo-of-you.jpg",
+        "https://images.unsplash.com/photo-1590608897129-79a0d3e0ff86?auto=format&fit=crop&w=80&h=80",
     },
   ];
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-6">My Books</h1>
+      <h1 className="text-3xl font-bold mb-6">My Wishlist</h1>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-lg shadow">
@@ -44,43 +41,31 @@ const MyBooks = () => {
               <th className="py-3 px-4 text-left">Name</th>
               <th className="py-3 px-4 text-left">Category</th>
               <th className="py-3 px-4 text-left">Price</th>
-              <th className="py-3 px-4 text-left">Status</th>
               <th className="py-3 px-4 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {books.map((book) => (
+            {wishlist.map((item) => (
               <tr
-                key={book.id}
+                key={item.id}
                 className="border-b hover:bg-gray-50 transition-colors"
               >
                 <td className="py-3 px-4">
                   <img
-                    src={book.image}
-                    alt={book.name}
+                    src={item.image}
+                    alt={item.name}
                     className="w-16 h-16 object-cover rounded"
                   />
                 </td>
-                <td className="py-3 px-4">{book.name}</td>
-                <td className="py-3 px-4">{book.category}</td>
-                <td className="py-3 px-4">{book.price}</td>
-                <td className="py-3 px-4">
-                  <span
-                    className={`px-2 py-1 rounded-full text-white font-medium ${
-                      book.status === "Published"
-                        ? "bg-green-500"
-                        : "bg-gray-500"
-                    }`}
-                  >
-                    {book.status}
-                  </span>
-                </td>
+                <td className="py-3 px-4">{item.name}</td>
+                <td className="py-3 px-4">{item.category}</td>
+                <td className="py-3 px-4">{item.price}</td>
                 <td className="py-3 px-4 flex gap-2">
-                  <button className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">
-                    Update
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
+                    View
                   </button>
                   <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
-                    Delete
+                    Remove
                   </button>
                 </td>
               </tr>
@@ -92,4 +77,4 @@ const MyBooks = () => {
   );
 };
 
-export default MyBooks;
+export default Wishlist;
