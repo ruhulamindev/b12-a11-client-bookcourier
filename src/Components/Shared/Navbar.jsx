@@ -62,9 +62,34 @@ const Navbar = () => {
       </div>
       <div className="navbar-end gap-2">
         {user ? (
-          <NavLink onClick={handleSignOut} className="btn">
-            Logout
-          </NavLink>
+          <div className="dropdown dropdown-end">
+            <img
+              tabIndex={0}
+              src={user.photoURL}
+              alt="profile"
+              className="w-10 h-10 rounded-full cursor-pointer border"
+            />
+
+            <ul
+              tabIndex={0}b
+              className="dropdown-content menu p-4 shadow bg-base-100 rounded-box w-56 z-20"
+            >
+              <li className="mb-2">
+                <p className="font-bold">{user.displayName}</p>
+                <p className="text-xs">{user.email}</p>
+              </li>
+
+              <li>
+                <NavLink to="/profile">Profile</NavLink>
+              </li>
+
+              <li>
+                <button onClick={handleSignOut} className="text-red-500">
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
         ) : (
           <>
             <NavLink to="/signin" className="btn">

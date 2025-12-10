@@ -7,6 +7,7 @@ import Signin from "../Pages/AuthenticationPage/Signin";
 import Signup from "../Pages/AuthenticationPage/Signup";
 import PrivateRoute from "./PrivateRoute";
 import DetailsPage from "../Pages/DetailsPage";
+import Profile from "../Pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -18,29 +19,37 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path:"all-books",
-        element:(
+        path: "all-books",
+        element: (
           <PrivateRoute>
-            <AllBooks/>
+            <AllBooks />
           </PrivateRoute>
-        )
+        ),
       },
       {
-        path:"details",
-        element:(
+        path: "details",
+        element: (
           <PrivateRoute>
-            <DetailsPage/>
+            <DetailsPage />
           </PrivateRoute>
-        )
+        ),
       },
       {
-        path:"signin",
-        element:<Signin/>
+        path: "signin",
+        element: <Signin />,
       },
       {
-        path:"signup",
-        element:<Signup/>
-      }
+        path: "signup",
+        element: <Signup />,
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
