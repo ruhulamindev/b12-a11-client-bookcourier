@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router";
 import Logo from "../Components/Logo/logo";
-import Statistics from "../Pages/Dashboard/Statistics";
 import useAuth from "../Hooks/useAuth";
+import {
+  FaChartBar,
+  FaShoppingCart,
+  FaFileInvoice,
+  FaHeart,
+  FaUserShield,
+  FaPlusCircle,
+  FaBook,
+  FaClipboardList,
+  FaUsers,
+  FaTools,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 
 const DashboardLayout = () => {
   const { logOut } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSignOut = () => {
     logOut()
@@ -15,36 +29,65 @@ const DashboardLayout = () => {
       });
   };
   const links = [
-    { to: "/dashboard", label: "Statistics" },
-    { to: "/dashboard/my-orders", label: "My Orders" },
-    { to: "/dashboard/invoices", label: "Invoices" },
-    { to: "/dashboard/wishlist", label: "My Wishlist" },
-    { to: "/dashboard/seller-request", label: "Become A Seller" },
+    { to: "/dashboard", label: "Statistics", icon: <FaChartBar /> },
+    {
+      to: "/dashboard/my-orders",
+      label: "My Orders",
+      icon: <FaShoppingCart />,
+    },
+    { to: "/dashboard/invoices", label: "Invoices", icon: <FaFileInvoice /> },
+    { to: "/dashboard/wishlist", label: "My Wishlist", icon: <FaHeart /> },
+    {
+      to: "/dashboard/seller-request",
+      label: "Become A Seller",
+      icon: <FaUserShield />,
+    },
 
     // Librarian
-    { to: "/dashboard/add-book", label: "Add Book" },
-    { to: "/dashboard/my-books", label: "My Books" },
-    { to: "/dashboard/manage-orders", label: "Manage Orders" },
+    { to: "/dashboard/add-book", label: "Add Book", icon: <FaPlusCircle /> },
+    { to: "/dashboard/my-books", label: "My Books", icon: <FaBook /> },
+    {
+      to: "/dashboard/manage-orders",
+      label: "Manage Orders",
+      icon: <FaClipboardList />,
+    },
 
     // Admin
-    { to: "/dashboard/all-users", label: "All Users" },
-    { to: "/dashboard/manage-books", label: "Manage Books" },
+    { to: "/dashboard/all-users", label: "All Users", icon: <FaUsers /> },
+    { to: "/dashboard/manage-books", label: "Manage Books", icon: <FaTools /> },
   ];
 
   return (
     <div className="flex min-h-screen bg-gray-300">
+      {/* sidebar top logo */}
+      <div className="lg:hidden w-full bg-white shadow p-4 flex justify-between items-center fixed z-50">
+        <Logo />
+        <button onClick={() => setIsOpen(true)}>
+          <FaBars className="text-2xl" />
+        </button>
+      </div>
       {/* left sidebar */}
-      <aside className="h-screen overflow-y-auto fixed w-64 bg-white shadow-lg p-6">
-        {/* sidebar top logo */}
-        <div className="flex items-center pb-2 border-b-2 gap-3 mb-8">
+      <aside
+        className={`fixed top-0 left-0 h-screen w-64 bg-white shadow-lg p-6 transform transition-transform duration-300 
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+        lg:translate-x-0 lg:static lg:block z-50`}
+      >
+        <div className="lg:hidden flex justify-end pb-2">
+          <button onClick={() => setIsOpen(false)}>
+            <FaTimes className="text-2xl" />
+          </button>
+        </div>
+
+        <div className="hidden lg:flex items-center pb-2 border-b-2 gap-3 mb-8">
           <Logo />
         </div>
 
         {/* sidebar menu option */}
-        <ul className="space-y-2">
+        <ul className="space-y-2 mt-5 lg:mt-0">
           {links.map((item, index) => (
             <li key={index}>
               <NavLink
+                onClick={() => setIsOpen(false)}
                 to={item.to}
                 className={({ isActive }) =>
                   `block p-2 rounded-lg ${
@@ -52,7 +95,10 @@ const DashboardLayout = () => {
                   }`
                 }
               >
-                {item.label}
+                <span className="flex items-center gap-2">
+                  {item.icon && <span className="text-xl">{item.icon}</span>}
+                  {item.label}
+                </span>
               </NavLink>
             </li>
           ))}
@@ -63,6 +109,7 @@ const DashboardLayout = () => {
           {/* My Profile Button */}
           <NavLink
             to="/dashboard/profile"
+            onClick={() => setIsOpen(false)}
             className={({ isActive }) =>
               `block text-center p-2 rounded-lg font-medium border ${
                 isActive
@@ -84,8 +131,15 @@ const DashboardLayout = () => {
         </div>
       </aside>
 
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 lg:hidden z-40"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+
       {/* right content */}
-      <main className="flex-1 p-8 ml-64">
+      <main className="flex-1 p-8 mt-16 lg:mt-0">
         <div className="bg-[#e9ecef] rounded-lg shadow p-6">
           <Outlet />
         </div>

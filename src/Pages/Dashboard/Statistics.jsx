@@ -34,11 +34,11 @@ const Statistics = () => {
       <h1 className="text-3xl font-bold mb-6">Dashboard Overview</h1>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {stats.map((item, index) => (
           <div
             key={index}
-            className="p-6 bg-white shadow-md rounded-xl flex items-center gap-4 hover:shadow-xl transition"
+            className="p-4 bg-white shadow-md rounded-xl flex items-center gap-4 hover:shadow-xl transition"
           >
             <div className={`p-4 rounded-full ${item.bg}`}>
               {item.icon}
@@ -46,7 +46,7 @@ const Statistics = () => {
 
             <div>
               <p className="text-gray-500 font-medium">{item.title}</p>
-              <h2 className="text-2xl font-bold">{item.value}</h2>
+              <h2 className="text-xl font-bold">{item.value}</h2>
             </div>
           </div>
         ))}
