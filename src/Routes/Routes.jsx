@@ -9,6 +9,8 @@ import PrivateRoute from "./PrivateRoute";
 import DetailsPage from "../Pages/DetailsPage";
 import Profile from "../Pages/Profile";
 import AddBook from "../Pages/Dashboard/Librarian/AddBook";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import Statistics from "../Pages/Dashboard/Statistics";
 
 export const router = createBrowserRouter([
   {
@@ -51,14 +53,33 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-            {
-        path: "add-book",
-        element: (
-          <PrivateRoute>
-            <AddBook />
-          </PrivateRoute>
-        ),
-      },
+    ],
+  },
+  // dashboardLayout
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      // --- User Routes ---
+    { index: true, element: <Statistics/> },
+    { path: "my-orders", element: <p>My Orders Page</p> },
+    { path: "invoices", element: <p>Invoices Page</p> },
+    { path: "wishlist", element: <p>My Wishlist Page</p> },
+    { path: "seller-request", element: <p>Become A Seller</p> },
+    
+    // --- Librarian Routes ---
+    { path: "add-book", element: <AddBook /> },
+    { path: "my-books", element: <p>My Books Page</p> },
+    { path: "manage-orders", element: <p>Librarian Orders Page</p> },
+    
+    // --- Admin Routes ---
+    { path: "all-users", element: <p>All Users Page</p> },
+    { path: "manage-books", element: <p>Manage Books Page</p> },
+    { path: "profile", element: <Profile /> },
     ],
   },
   {
