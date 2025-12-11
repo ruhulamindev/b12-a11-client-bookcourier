@@ -1,19 +1,46 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 const AddBook = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+
+  const queryClient = useQueryClient();
+
+  const addBookMutation = useMutation({
+    mutationFn: async (bookData) => {
+      const response = await axios.post(
+        "http://localhost:3000/books_all",
+        bookData
+      );
+      return response.data;
+    },
+
+    onSuccess: () => {
+      alert("Book added successfully!");
+      reset();
+      queryClient.invalidateQueries({ queryKey: ["books"] });
+    },
+
+    onError: (error) => {
+      console.log(
+        "Error adding book to server:",
+        error.response?.data || error.message
+      );
+      alert("Failed to add book!");
+    },
+  });
 
   const onSubmit = async (data) => {
     try {
       // Image file select
       const profileImage = data.photo[0];
-
       // FormData for image
       const formData = new FormData();
       formData.append("image", profileImage);
@@ -27,13 +54,19 @@ const AddBook = () => {
       const imageUrl = res.data.data.url;
 
       const bookData = {
-        ...data,
+        name: data.name,
+        author: data.author,
+        status: data.status,
+        price: Number(data.price),
+        category: data.category,
+        description: data.description,
         image: imageUrl,
       };
 
-      console.log("Book Added:", bookData);
+      addBookMutation.mutate(bookData);
     } catch (error) {
-      console.log("Error adding book:", error);
+      console.log("Error uploading image:", error);
+      alert("Image upload failed!");
     }
   };
 
@@ -155,9 +188,10 @@ const AddBook = () => {
           {/* Submit Button */}
           <button
             type="submit"
+            disabled={addBookMutation.isLoading}
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition mt-4"
           >
-            Add Book
+            {addBookMutation.isLoading ? "Adding..." : "Add Book"}
           </button>
         </form>
       </div>
