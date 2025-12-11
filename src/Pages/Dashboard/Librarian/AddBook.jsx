@@ -3,7 +3,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 const AddBook = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = async (data) => {
     try {
@@ -41,41 +45,54 @@ const AddBook = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Book Name */}
           <div>
-            <label className="font-medium">Book Name</label>
+            <label className="font-medium">Book Name*</label>
             <input
               type="text"
-              {...register("name", { required: true })}
+              {...register("name", { required: "Book name is required" })}
               className="w-full p-2 border rounded-lg mt-1"
               placeholder="Enter book name"
             />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            )}
           </div>
 
           {/* Book Image URL */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-1">
-              Profile Image
+              Profile Image*
             </label>
             <input
               type="file"
-              {...register("photo", { required: true })}
+              {...register("photo", { required: "Book image is required" })}
               className="file-input w-full border bg-gray-100 border-gray-300 p-2 rounded-lg cursor-pointer"
             />
+            {errors.photo && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.photo.message}
+              </p>
+            )}
           </div>
 
           {/* Author */}
           <div>
-            <label className="font-medium">Author</label>
+            <label className="font-medium">Author*</label>
             <input
               type="text"
-              {...register("author", { required: true })}
+              {...register("author", { required: "Author name is required" })}
               className="w-full p-2 border rounded-lg mt-1"
               placeholder="Enter author name"
             />
+            {errors.author && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.author.message}
+              </p>
+            )}
           </div>
 
           {/* Status */}
           <div>
-            <label className="font-medium">Status</label>
+            <label className="font-medium">Status*</label>
             <select
               {...register("status", { required: true })}
               className="w-full p-2 border rounded-lg mt-1"
@@ -87,35 +104,52 @@ const AddBook = () => {
 
           {/* Price */}
           <div>
-            <label className="font-medium">Price ($)</label>
+            <label className="font-medium">Price ($)*</label>
             <input
               type="number"
-              {...register("price", { required: true })}
+              {...register("price", { required: "Price is required" })}
               className="w-full p-2 border rounded-lg mt-1"
               placeholder="Enter price"
             />
+            {errors.price && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.price.message}
+              </p>
+            )}
           </div>
 
           {/* Category */}
           <div>
-            <label className="font-medium">Category</label>
+            <label className="font-medium">Category*</label>
             <input
               type="text"
-              {...register("category")}
+              {...register("category", { required: "Category is required" })}
               className="w-full p-2 border rounded-lg mt-1"
               placeholder="Example: Novel, Science, Islamic, History..."
             />
+            {errors.category && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.category.message}
+              </p>
+            )}
           </div>
 
           {/* Description */}
           <div>
-            <label className="font-medium">Description</label>
+            <label className="font-medium">Description*</label>
             <textarea
-              {...register("description")}
+              {...register("description", {
+                required: "Description is required",
+              })}
               className="w-full p-2 border rounded-lg mt-1"
               placeholder="Write a short description..."
               rows="3"
             ></textarea>
+            {errors.description && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.description.message}
+              </p>
+            )}
           </div>
 
           {/* Submit Button */}

@@ -53,7 +53,7 @@ const Signin = () => {
           {/* Email Input */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-1">
-              Email
+              Email*
             </label>
             <input
               type="email"
@@ -69,7 +69,7 @@ const Signin = () => {
           {/* Password Input */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-1">
-              Password
+              Password*
             </label>
             <input
               type="password"

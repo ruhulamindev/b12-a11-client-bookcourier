@@ -82,7 +82,9 @@ const Signup = () => {
         <form className="space-y-4" onSubmit={handleSubmit(handleSingup)}>
           {/* Name Input */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-1">Name</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Name*
+            </label>
             <input
               type="text"
               {...register("name", { required: true })}
@@ -97,7 +99,7 @@ const Signup = () => {
           {/* Image Upload */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-1">
-              Profile Image
+              Profile Image*
             </label>
             <input
               type="file"
@@ -112,7 +114,7 @@ const Signup = () => {
           {/* Email Input */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-1">
-              Email
+              Email*
             </label>
             <input
               type="email"
@@ -128,7 +130,7 @@ const Signup = () => {
           {/* Password Input */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-1">
-              Password
+              Password*
             </label>
             <input
               type="password"
