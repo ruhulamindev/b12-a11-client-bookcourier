@@ -33,16 +33,19 @@ const BookCard = ({ book }) => {
 
         <div className="card-actions justify-end mt-3 flex items-center gap-3">
           <div className="flex items-center gap-1 badge badge-outline">
-            <Link to="/" className="font-bold">
+            <Link to="/" className="font-bold flex items-center gap-1">
               Wishlist
+              <GiSelfLove className="text-xl text-red-500" />
             </Link>
-            <GiSelfLove className="text-xl text-red-500" />
           </div>
           <div className="flex items-center gap-1 badge badge-outline">
-            <Link to={`/details/${book._id}`} className="font-bold">
+            <Link
+              to={`/details/${book._id}`}
+              className="font-bold flex items-center gap-1"
+            >
               Details
+              <IoArrowRedoCircleSharp className="text-xl text-red-500" />
             </Link>
-            <IoArrowRedoCircleSharp className="text-xl text-red-500" />
           </div>
         </div>
       </div>
