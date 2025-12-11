@@ -69,18 +69,15 @@ const MyBooks = () => {
                     className={`px-2 py-1 rounded-full text-white font-medium ${
                       book.status === "Published"
                         ? "bg-green-500"
-                        : "bg-gray-500"
+                        : "bg-[#ff006e]"
                     }`}
                   >
                     {book.status}
                   </span>
                 </td>
                 <td className="py-3 px-4 flex gap-2">
-                  <button className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">
+                  <button className="bg-blue-500 hover:bg-blue-500 text-white px-3 py-1 rounded">
                     Update
-                  </button>
-                  <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
-                    Delete
                   </button>
                 </td>
               </tr>
