@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
+import useAuth from "./../../../Hooks/useAuth";
 
 const AddBook = () => {
+  const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -55,7 +57,6 @@ const AddBook = () => {
       const image_API_URL = `https://api.imgbb.com/1/upload?key=${
         import.meta.env.VITE_image_host_key
       }`;
-
       const res = await axios.post(image_API_URL, formData);
       const imageUrl = res.data.data.url;
 
@@ -67,6 +68,11 @@ const AddBook = () => {
         category: data.category,
         description: data.description,
         image: imageUrl,
+        seller: {
+          name: user?.displayName || "Unknown Seller",
+          email: user?.email || "No Email",
+          image: user?.photoURL || "",
+        },
       };
 
       addBookMutation.mutate(bookData);
