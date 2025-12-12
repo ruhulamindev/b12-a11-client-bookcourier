@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import Loading from "../Components/Loading";
 import axios from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const DetailsPage = () => {
- const { id } = useParams();
-  // console.log(id)
+  const { id } = useParams();
+  const [open, setOpen] = useState(false);
 
   const {
     data: book,
@@ -19,8 +21,40 @@ const DetailsPage = () => {
     },
   });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
   if (isLoading) return <Loading />;
   if (error) return <p>Error loading book details</p>;
+
+  const onSubmit = async (data) => {
+    const orderData = {
+      bookId: book._id,
+      bookName: book.name,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      address: data.address,
+      quantity: Number(data.quantity),
+      status: "pending",
+      paymentStatus: "unpaid",
+      orderDate: new Date().toISOString().split("T")[0],
+    };
+
+    try {
+      await axios.post("http://localhost:3000/orders", orderData);
+      alert("Order placed successfully!");
+      setOpen(false);
+      reset();
+    } catch (err) {
+      console.log(err);
+      alert("Failed to place order");
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -68,12 +102,119 @@ const DetailsPage = () => {
 
           {/* Order Button */}
           <button
+            onClick={() => setOpen(true)}
             className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
           >
             Order Now
           </button>
         </div>
       </div>
+
+      {/* Modal */}
+      {open && (
+        <div className="fixed inset-0 bg-amber-200 bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white w-96 p-6 rounded-xl shadow-lg relative">
+            <button
+              className="absolute top-2 right-3 text-xl font-bold"
+              onClick={() => setOpen(false)}
+            >
+              ×
+            </button>
+
+            <h2 className="text-2xl font-bold mb-4">Place Your Order</h2>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              {/* Name */}
+              <div>
+                <label className="block font-semibold mb-1">Name</label>
+                <input
+                  type="text"
+                  {...register("name", { required: "Name is required" })}
+                  className="input input-bordered w-full"
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name.message}</p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block font-semibold mb-1">Email</label>
+                <input
+                  type="email"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Invalid email address",
+                    },
+                  })}
+                  className="input input-bordered w-full"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
+                )}
+              </div>
+
+              {/* Quantity */}
+              <div>
+                <label className="block font-semibold mb-1">Quantity</label>
+                <input
+                  type="number"
+                  {...register("quantity", {
+                    required: "Quantity is required",
+                    min: { value: 1, message: "Minimum 1" },
+                  })}
+                  className="input input-bordered w-full"
+                  defaultValue={1}
+                />
+                {errors.quantity && (
+                  <p className="text-red-500 text-sm">
+                    {errors.quantity.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="block font-semibold mb-1">Phone Number</label>
+                <input
+                  type="text"
+                  {...register("phone", { required: "Phone is required" })}
+                  placeholder="Enter phone number"
+                  className="input input-bordered w-full"
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm">{errors.phone.message}</p>
+                )}
+              </div>
+
+              {/* Address */}
+              <div>
+                <label className="block font-semibold mb-1">Address</label>
+                <textarea
+                  {...register("address", { required: "Address is required" })}
+                  placeholder="Enter full address"
+                  className="textarea textarea-bordered w-full"
+                  rows={3}
+                ></textarea>
+                {errors.address && (
+                  <p className="text-red-500 text-sm">
+                    {errors.address.message}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 mt-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700"
+              >
+                Place Order
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
