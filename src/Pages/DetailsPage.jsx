@@ -112,7 +112,7 @@ const DetailsPage = () => {
 
       {/* Modal */}
       {open && (
-        <div className="fixed inset-0 bg-amber-200 bg-opacity-40 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-amber-200 bg-opacity-40 flex items-center justify-center z-50 overflow-auto py-10">
           <div className="bg-white w-96 p-6 rounded-xl shadow-lg relative">
             <button
               className="absolute top-2 right-3 text-xl font-bold"
@@ -126,7 +126,7 @@ const DetailsPage = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* Name */}
               <div>
-                <label className="block font-semibold mb-1">Name</label>
+                <label className="block font-semibold mb-1">Name*</label>
                 <input
                   type="text"
                   {...register("name", { required: "Name is required" })}
@@ -139,7 +139,7 @@ const DetailsPage = () => {
 
               {/* Email */}
               <div>
-                <label className="block font-semibold mb-1">Email</label>
+                <label className="block font-semibold mb-1">Email*</label>
                 <input
                   type="email"
                   {...register("email", {
@@ -158,15 +158,21 @@ const DetailsPage = () => {
 
               {/* Quantity */}
               <div>
-                <label className="block font-semibold mb-1">Quantity</label>
+                <label className="block font-semibold mb-1">Quantity*</label>
                 <input
                   type="number"
                   {...register("quantity", {
                     required: "Quantity is required",
                     min: { value: 1, message: "Minimum 1" },
+                    validate: (value) =>
+                      value > 0 || "Quantity must be a positive number",
                   })}
                   className="input input-bordered w-full"
                   defaultValue={1}
+                  onChange={(e) => {
+                    if (e.target.value < 1) e.target.value = 1;
+                  }}
+                  onWheel={(e) => e.target.blur()}
                 />
                 {errors.quantity && (
                   <p className="text-red-500 text-sm">
@@ -177,7 +183,9 @@ const DetailsPage = () => {
 
               {/* Phone */}
               <div>
-                <label className="block font-semibold mb-1">Phone Number</label>
+                <label className="block font-semibold mb-1">
+                  Phone Number*
+                </label>
                 <input
                   type="text"
                   {...register("phone", { required: "Phone is required" })}
@@ -191,7 +199,7 @@ const DetailsPage = () => {
 
               {/* Address */}
               <div>
-                <label className="block font-semibold mb-1">Address</label>
+                <label className="block font-semibold mb-1">Address*</label>
                 <textarea
                   {...register("address", { required: "Address is required" })}
                   placeholder="Enter full address"

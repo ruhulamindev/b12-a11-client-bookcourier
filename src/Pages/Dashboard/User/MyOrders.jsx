@@ -114,7 +114,6 @@ const MyOrders = () => {
                     </button>
                   )}
 
-                  {/* PAY NOW BUTTON → only unpaid + pending */}
                   {item.status === "pending" && item.paymentStatus === "unpaid" && (
                     <button
                       onClick={() => handlePayNow(item.id)}
