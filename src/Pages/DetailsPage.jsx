@@ -4,10 +4,12 @@ import Loading from "../Components/Loading";
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import useAuth from "./../Hooks/useAuth";
 
 const DetailsPage = () => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
 
   const {
     data: book,
@@ -103,7 +105,7 @@ const DetailsPage = () => {
           {/* Order Button */}
           <button
             onClick={() => setOpen(true)}
-            className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
+            className="w-full px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
           >
             Order Now
           </button>
@@ -128,6 +130,8 @@ const DetailsPage = () => {
               <div>
                 <label className="block font-semibold mb-1">Name*</label>
                 <input
+                  defaultValue={user?.displayName}
+                  readOnly
                   type="text"
                   {...register("name", { required: "Name is required" })}
                   className="input input-bordered w-full"
@@ -142,6 +146,8 @@ const DetailsPage = () => {
                 <label className="block font-semibold mb-1">Email*</label>
                 <input
                   type="email"
+                  defaultValue={user?.email}
+                  readOnly
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
@@ -215,7 +221,7 @@ const DetailsPage = () => {
 
               <button
                 type="submit"
-                className="w-full py-3 mt-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700"
+                className="w-full py-2 mt-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700"
               >
                 Place Order
               </button>
