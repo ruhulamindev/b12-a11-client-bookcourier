@@ -37,6 +37,9 @@ const DetailsPage = () => {
     const orderData = {
       bookId: book._id,
       bookName: book.name,
+      bookImage: book.image,
+      bookCategory: book.category,
+      bookPrice: book.price,
       name: data.name,
       email: data.email,
       phone: data.phone,
@@ -167,16 +170,17 @@ const DetailsPage = () => {
                 <label className="block font-semibold mb-1">Quantity*</label>
                 <input
                   type="number"
+                  defaultValue={1}
                   {...register("quantity", {
                     required: "Quantity is required",
-                    min: { value: 1, message: "Minimum 1" },
+                    min: { value: 1, message: "Minimum quantity is 1" },
                     validate: (value) =>
                       value > 0 || "Quantity must be a positive number",
                   })}
                   className="input input-bordered w-full"
-                  defaultValue={1}
                   onChange={(e) => {
-                    if (e.target.value < 1) e.target.value = 1;
+                    let value = Number(e.target.value);
+                    if (value < 0) e.target.value = 0;
                   }}
                   onWheel={(e) => e.target.blur()}
                 />

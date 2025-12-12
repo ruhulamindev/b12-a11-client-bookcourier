@@ -1,48 +1,33 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React from "react";
+import useAuth from "../../../Hooks/useAuth";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const MyOrders = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { user } = useAuth();
 
-  const [orders, setOrders] = useState([
-    {
-      id: 1,
-      image: "https://st.depositphotos.com/1643295/3583/i/450/depositphotos_35837089-stock-photo-photo-of-you.jpg",
-      name: "The Great Gatsby",
-      category: "Novel",
-      price: 25,
-      quantity: 1,
-      status: "pending",
-      paymentStatus: "unpaid",
-      orderDate: "2025-12-10",
+  const { data: orders = [], isLoading } = useQuery({
+    queryKey: ["my-orders", user?.email],
+    queryFn: async () => {
+      const res = await axios.get(
+        `http://localhost:3000/orders?email=${user.email}`
+      );
+      return res.data;
     },
-    {
-      id: 2,
-      image: "https://st.depositphotos.com/1643295/3583/i/450/depositphotos_35837089-stock-photo-photo-of-you.jpg",
-      name: "Atomic Habits",
-      category: "Self Help",
-      price: 30,
-      quantity: 2,
-      status: "completed",
-      paymentStatus: "paid",
-      orderDate: "2025-12-05",
-    },
-  ]);
+  });
 
-  // CANCEL FUNCTION
-  const handleCancel = (id) => {
-    const updated = orders.map((order) =>
-      order.id === id
-        ? { ...order, status: "cancelled", paymentStatus: "unpaid" }
-        : order
-    );
-    setOrders(updated);
-  };
+  if (isLoading) return <p>Loading...</p>;
 
-  // PAYMENT FUNCTION
-  const handlePayNow = (id) => {
-    navigate(`/payment/${id}`);
-  };
+  // cancel function
+  //  const handleCancel = (id) => {
+  //     alert("Cancel API tumi backend e korle ekhane add kore dibo");
+  //   };
+
+  // payment function
+  // const handlePayNow = (id) => {
+  //   navigate(`/payment/${id}`);
+  // };
 
   return (
     <div className="p-4">
@@ -68,17 +53,20 @@ const MyOrders = () => {
               <tr key={item.id} className="border-b hover:bg-gray-50">
                 <td className="p-3">
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={item.bookImage}
+                    alt={item.bookName}
                     className="w-16 h-16 object-cover rounded"
                   />
                 </td>
 
-                <td className="p-3 font-medium">{item.name}</td>
+                <td className="p-3 font-medium">{item.bookName}</td>
 
-                <td className="p-3 text-gray-600">{item.category}</td>
+                <td className="p-3 text-gray-600">{item.bookCategory}</td>
 
-                <td className="p-3 font-semibold">${item.price}</td>
+                <td className="p-3 font-semibold">
+                  ${item.bookPrice} × {item.quantity} = $
+                  {item.bookPrice * item.quantity}
+                </td>
 
                 <td className="p-3">{item.quantity}</td>
 
@@ -101,27 +89,29 @@ const MyOrders = () => {
                   </span>
                 </td>
 
-                {/* ACTION BUTTONS */}
-                <td className="p-3 flex gap-2">
+                {/* action button */}
+                <td className="p-3 align-middle">
+                  <div className="flex gap-2 items-center">
+                    {/* cancel button → only for pending */}
+                    {item.status === "pending" && (
+                      <button
+                        // onClick={() => handleCancel(item.id)}
+                        className="px-4 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm"
+                      >
+                        Cancel
+                      </button>
+                    )}
 
-                  {/* CANCEL BUTTON → only for pending */}
-                  {item.status === "pending" && (
-                    <button
-                      onClick={() => handleCancel(item.id)}
-                      className="px-4 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm"
-                    >
-                      Cancel
-                    </button>
-                  )}
-
-                  {item.status === "pending" && item.paymentStatus === "unpaid" && (
-                    <button
-                      onClick={() => handlePayNow(item.id)}
-                      className="px-4 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm"
-                    >
-                      Pay Now
-                    </button>
-                  )}
+                    {item.status === "pending" &&
+                      item.paymentStatus === "unpaid" && (
+                        <button
+                          // onClick={() => handlePayNow(item.id)}
+                          className="px-4 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm"
+                        >
+                          Pay Now
+                        </button>
+                      )}
+                  </div>
                 </td>
               </tr>
             ))}
