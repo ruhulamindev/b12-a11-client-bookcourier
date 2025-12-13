@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import Loading from "../Components/Loading";
 import axios from "axios";
 import { useState } from "react";
@@ -10,6 +10,7 @@ const DetailsPage = () => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const {
     data: book,
@@ -62,6 +63,7 @@ const DetailsPage = () => {
       alert("Order placed successfully!");
       setOpen(false);
       reset();
+      navigate("/dashboard/my-orders");
     } catch (err) {
       console.log(err);
       alert("Failed to place order");
@@ -71,6 +73,14 @@ const DetailsPage = () => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="grid md:grid-cols-2 gap-8 bg-white p-6 rounded-xl shadow">
+        <div className="md:col-span-2">
+          <button
+            onClick={() => navigate("/all-books")}
+            className="mb-4 px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg font-semibold"
+          >
+            ← Back to All Books
+          </button>
+        </div>
         {/* Book Image */}
         <img
           src={book.image}

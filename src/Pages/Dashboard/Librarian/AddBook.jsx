@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import useAuth from "./../../../Hooks/useAuth";
+import { useNavigate } from "react-router";
 
 const AddBook = () => {
   const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -30,6 +32,7 @@ const AddBook = () => {
       alert("Book added successfully!");
       reset();
       queryClient.invalidateQueries({ queryKey: ["books"] });
+      navigate("/dashboard/my-books");
     },
 
     onError: (error) => {
