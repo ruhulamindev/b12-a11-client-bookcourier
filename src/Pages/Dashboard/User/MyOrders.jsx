@@ -24,10 +24,41 @@ const MyOrders = () => {
   //     alert("Cancel API tumi backend e korle ekhane add kore dibo");
   //   };
 
-  // payment function
-  // const handlePayNow = (id) => {
-  //   navigate(`/payment/${id}`);
-  // };
+  const handlePayment = async (item) => {
+    console.log("ORDER ITEM 👉", item);
+    const paymentInfo = {
+      orderId: item._id,
+      bookName: item.bookName,
+      imageURL: item.bookImage,
+      category: item.bookCategory,
+      price: item.bookPrice,
+      quantity: item.quantity,
+      totalPrice: item.bookPrice * item.quantity,
+      seller: {
+        name: item.seller?.name,
+        email: item.seller?.email,
+        image: item.seller?.image,
+      },
+      customer: {
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      },
+    };
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/create-checkout-session",
+        paymentInfo
+      );
+
+window.location.assign(data.url);
+
+      console.log("Checkout URL 👉", data.url);
+    } catch (error) {
+      console.error("Payment error 👉", error);
+    }
+  };
 
   return (
     <div className="p-4">
@@ -50,7 +81,7 @@ const MyOrders = () => {
 
           <tbody>
             {orders.map((item) => (
-              <tr key={item.id} className="border-b hover:bg-gray-50">
+              <tr key={item._id} className="border-b hover:bg-gray-50">
                 <td className="p-3">
                   <img
                     src={item.bookImage}
@@ -105,7 +136,7 @@ const MyOrders = () => {
                     {item.status === "pending" &&
                       item.paymentStatus === "unpaid" && (
                         <button
-                          // onClick={() => handlePayNow(item.id)}
+                          onClick={() => handlePayment(item)}
                           className="px-4 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm"
                         >
                           Pay Now
