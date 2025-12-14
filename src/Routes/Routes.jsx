@@ -19,6 +19,7 @@ import Wishlist from "../Pages/Dashboard/User/Wishlist";
 import SellerRequest from "../Pages/Dashboard/User/SellerRequest";
 import AllUsers from "../Pages/Dashboard/Admin/AllUsers";
 import ManageBooks from "../Pages/Dashboard/Admin/ManageBooks";
+import PaymentPage from "../Pages/PaymentPage";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         element: <Signup />,
+      },
+      {
+        path:"payment",
+        element:<PaymentPage/>
       },
       {
         path: "profile",

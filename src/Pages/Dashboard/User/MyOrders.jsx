@@ -19,7 +19,7 @@ const MyOrders = () => {
       );
       return res.data;
     },
-    refetchInterval: 5000, // auto page update no refash
+    refetchInterval: 2000, // auto page update no refash
   });
 
   // newest orders first
@@ -40,6 +40,7 @@ const MyOrders = () => {
   const handlePayment = async (item) => {
     const paymentInfo = {
       orderId: item._id,
+      bookId: item.bookId,
       bookName: item.bookName,
       imageURL: item.bookImage,
       price: item.bookPrice,
@@ -50,9 +51,11 @@ const MyOrders = () => {
         name: user?.displayName,
         email: user?.email,
         image: user?.photoURL,
+        phone: item.customer?.phone,
+        address: item.customer?.address,
       },
     };
-
+    // console.log("PAYMENT INFO (Frontend)", paymentInfo);
     try {
       const { data } = await axios.post(
         "http://localhost:3000/create-checkout-session",
@@ -80,6 +83,8 @@ const MyOrders = () => {
               <th className="p-3 font-semibold">Price</th>
               <th className="p-3 font-semibold">Qty</th>
               <th className="p-3 font-semibold">Order Date</th>
+              <th className="p-3 font-semibold">Phone</th>
+              <th className="p-3 font-semibold">Address</th>
               <th className="p-3 font-semibold">Status</th>
               <th className="p-3 font-semibold">Action</th>
             </tr>
@@ -104,6 +109,8 @@ const MyOrders = () => {
                 </td>
                 <td className="p-3">{item.quantity}</td>
                 <td className="p-3 text-gray-500">{item.orderDate}</td>
+                <td className="p-3">{item.customer?.phone}</td>
+                <td className="p-3">{item.customer?.address}</td>
 
                 {/* Status column */}
                 <td className="p-3">
@@ -139,6 +146,20 @@ const MyOrders = () => {
                 {/* Action column */}
                 <td className="p-3 align-middle">
                   <div className="flex gap-2 items-center">
+                    {/* cancel order */}
+                    {item.status === "cancelled" && (
+                      <>
+                        {item.paymentStatus === "paid" ? (
+                          <span className="px-3 py-1 rounded-full bg-orange-100 text-orange-700 font-semibold">
+                            Paid (Return Support)
+                          </span>
+                        ) : (
+                          <span className="px-3 py-1 rounded-full bg-gray-100 text-red-500 font-semibold">
+                            Unpaid
+                          </span>
+                        )}
+                      </>
+                    )}
                     {/* User can cancel unpaid orders */}
                     {item.status === "pending" &&
                       item.paymentStatus === "unpaid" && (
@@ -157,14 +178,6 @@ const MyOrders = () => {
                           </button>
                         </>
                       )}
-
-                    {/* Cancelled orders */}
-                    {item.status === "cancelled" && (
-                      <span className="px-3 py-1 rounded-lg bg-gray-100 text-red-500 font-semibold">
-                        Unpaid
-                      </span>
-                    )}
-
                     {/* Paid orders */}
                     {item.paymentStatus === "paid" &&
                       item.status !== "cancelled" && (

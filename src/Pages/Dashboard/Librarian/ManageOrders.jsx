@@ -22,7 +22,7 @@ const ManageOrders = () => {
 
   // newest orders first
   const sortedOrders = orders.slice().reverse();
-  
+
   if (isLoading) return <p>Loading...</p>;
 
   // change order status
@@ -51,6 +51,8 @@ const ManageOrders = () => {
           <thead className="bg-gray-100">
             <tr>
               <th className="p-3 text-left">Customer</th>
+              <th className="p-3 text-left">Phone</th>
+              <th className="p-3 text-left">Address</th>
               <th className="p-3 text-left">Book</th>
               <th className="p-3 text-left">Image</th>
               <th className="p-3 text-left">Quantity</th>
@@ -71,6 +73,8 @@ const ManageOrders = () => {
                     {order.customer?.email}
                   </span>
                 </td>
+                <td className="p-3">{order.customer?.phone}</td>
+                <td className="p-3">{order.customer?.address}</td>
 
                 <td className="p-3">{order.bookName}</td>
                 <td className="p-3">
