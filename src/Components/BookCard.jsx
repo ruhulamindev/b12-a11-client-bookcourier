@@ -10,7 +10,7 @@ const BookCard = ({ book }) => {
         <img
           src={book.image}
           alt={book.name}
-          className="w-full h-60 object-cover"
+          className="w-full h-60 object-contain bg-gray-100"
         />
       </figure>
 

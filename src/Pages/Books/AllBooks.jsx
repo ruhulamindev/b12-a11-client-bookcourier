@@ -12,8 +12,8 @@ const AllBooks = () => {
   } = useQuery({
     queryKey: ["all-books"],
     queryFn: async () => {
-      const result = await axios("http://localhost:3000/books_all");
-      return result.data;
+      const res = await axios.get("http://localhost:3000/books_all");
+      return res.data.filter((book) => book.status === "published");
     },
   });
   if (isLoading) return <Loading />;

@@ -51,12 +51,12 @@ const ManageOrders = () => {
           <thead className="bg-gray-100">
             <tr>
               <th className="p-3 text-left">Customer</th>
+              <th className="p-3 text-left">Image</th>
+              <th className="p-3 text-left">Book Title</th>
+              <th className="p-3 text-left">Qty</th>
+              <th className="p-3 text-left">Price</th>
               <th className="p-3 text-left">Phone</th>
               <th className="p-3 text-left">Address</th>
-              <th className="p-3 text-left">Book</th>
-              <th className="p-3 text-left">Image</th>
-              <th className="p-3 text-left">Quantity</th>
-              <th className="p-3 text-left">Price</th>
               <th className="p-3 text-left">Payment</th>
               <th className="p-3 text-left">Status</th>
               <th className="p-3 text-left">Action</th>
@@ -73,10 +73,6 @@ const ManageOrders = () => {
                     {order.customer?.email}
                   </span>
                 </td>
-                <td className="p-3">{order.customer?.phone}</td>
-                <td className="p-3">{order.customer?.address}</td>
-
-                <td className="p-3">{order.bookName}</td>
                 <td className="p-3">
                   <img
                     src={order.bookImage}
@@ -84,12 +80,14 @@ const ManageOrders = () => {
                     className="w-16 h-16 object-cover rounded"
                   />
                 </td>
-
+                <td className="p-3">{order.bookName}</td>
                 <td className="p-3">{order.quantity}</td>
                 <td className="p-3 font-semibold">
                   ${order.bookPrice} × {order.quantity} = $
                   {order.bookPrice * order.quantity}
                 </td>
+                <td className="p-3">{order.customer?.phone}</td>
+                <td className="p-3">{order.customer?.address}</td>
 
                 <td className="p-3">
                   {order.paymentStatus === "paid" ? (

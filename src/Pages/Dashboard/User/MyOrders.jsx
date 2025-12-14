@@ -80,8 +80,8 @@ const MyOrders = () => {
               <th className="p-3 font-semibold">Image</th>
               <th className="p-3 font-semibold">Book Title</th>
               <th className="p-3 font-semibold">Category</th>
-              <th className="p-3 font-semibold">Price</th>
               <th className="p-3 font-semibold">Qty</th>
+              <th className="p-3 font-semibold">Price</th>
               <th className="p-3 font-semibold">Order Date</th>
               <th className="p-3 font-semibold">Phone</th>
               <th className="p-3 font-semibold">Address</th>
@@ -103,11 +103,11 @@ const MyOrders = () => {
 
                 <td className="p-3 font-medium">{item.bookName}</td>
                 <td className="p-3 text-gray-600">{item.bookCategory}</td>
+                <td className="p-3">{item.quantity}</td>
                 <td className="p-3 font-semibold">
                   ${item.bookPrice} × {item.quantity} = $
                   {item.bookPrice * item.quantity}
                 </td>
-                <td className="p-3">{item.quantity}</td>
                 <td className="p-3 text-gray-500">{item.orderDate}</td>
                 <td className="p-3">{item.customer?.phone}</td>
                 <td className="p-3">{item.customer?.address}</td>

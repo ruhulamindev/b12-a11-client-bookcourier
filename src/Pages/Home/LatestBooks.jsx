@@ -10,12 +10,13 @@ const LatestBooks = () => {
     isPending,
     error,
   } = useQuery({
-    queryKey: ["all-books"],
+    queryKey: ["latest-books"],
     queryFn: async () => {
-      const result = await axios("http://localhost:3000/books_all");
-      return result.data;
+      const res = await axios.get("http://localhost:3000/books_all");
+      return res.data.filter((book) => book.status === "published");
     },
   });
+
   // console.log(data)
   if (isPending) return <Loading />;
   if (error) return "An error has occurred: " + error.message;

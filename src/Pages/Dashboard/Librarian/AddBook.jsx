@@ -156,12 +156,35 @@ const AddBook = () => {
           {/* Price */}
           <div>
             <label className="font-medium">Price ($)*</label>
+
             <input
               type="number"
-              {...register("price", { required: "Price is required" })}
+              min={0}
+              step="1"
+              {...register("price", {
+                required: "Price is required",
+                min: {
+                  value: 0,
+                  message: "Price cannot be negative",
+                },
+                validate: (value) => {
+                  // leading zero block (except 0)
+                  if (/^0\d+/.test(value.toString())) {
+                    return "Invalid price format";
+                  }
+                  return true;
+                },
+                valueAsNumber: true,
+              })}
               className="w-full p-2 border rounded-lg mt-1"
               placeholder="Enter price"
+              onKeyDown={(e) => {
+                if (e.key === "-" || e.key === "e") {
+                  e.preventDefault();
+                }
+              }}
             />
+
             {errors.price && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.price.message}
