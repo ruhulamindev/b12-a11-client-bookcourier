@@ -19,7 +19,7 @@ const Signup = () => {
   const { registerUser, googleSignin, updateUserProfile } = useAuth();
 
   // email and password signup
-  const handleSingup = (data) => {
+  const handleSignup = (data) => {
     console.log(data.photo[0]);
 
     const profileImage = data.photo[0];
@@ -79,7 +79,7 @@ const Signup = () => {
         {/* Title */}
         <h1 className="text-2xl font-bold text-center mb-6">Sign Up</h1>
 
-        <form className="space-y-4" onSubmit={handleSubmit(handleSingup)}>
+        <form className="space-y-4" onSubmit={handleSubmit(handleSignup)}>
           {/* Name Input */}
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-1">
