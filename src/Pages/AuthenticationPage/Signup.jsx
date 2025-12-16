@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
+import { saveOrUpdateUser } from "../../Routes/Utilis";
 
 const Signup = () => {
   const location = useLocation();
@@ -19,46 +20,46 @@ const Signup = () => {
   const { registerUser, googleSignin, updateUserProfile } = useAuth();
 
   // email and password signup
-  const handleSignup = (data) => {
-    console.log(data.photo[0]);
+  const handleSignup = async (data) => {
+    try {
+      const profileImage = data.photo[0];
 
-    const profileImage = data.photo[0];
+      const result = await registerUser(data.email, data.password);
+      console.log(result.user);
 
-    registerUser(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
+      // store the image and get the photo url
+      const formData = new FormData();
+      formData.append("image", profileImage);
 
-        // store the image and get the photo url
-        const formData = new FormData();
-        formData.append("image", profileImage);
+      // send the photo to store and get the url
+      const image_API_URL = `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_image_host_key
+      }`;
 
-        // send the photo to store and get the url
-        const image_API_URL = `https://api.imgbb.com/1/upload?key=${
-          import.meta.env.VITE_image_host_key
-        }`;
+      const imageRes = await axios.post(image_API_URL, formData);
+      const imageURL = imageRes.data.data.url;
+      console.log("after image upload", imageURL);
 
-        axios.post(image_API_URL, formData).then((res) => {
-          console.log("affer image upload", res.data.data.url);
+      // update user profile to firebase
+      const userProfile = {
+        displayName: data.name,
+        photoURL: imageURL,
+      };
+      await updateUserProfile(userProfile);
 
-          // update user profile to firebase
-          const userProfile = {
-            displayName: data.name,
-            photoURL: res.data.data.url,
-          };
-
-          updateUserProfile(userProfile)
-            .then(() => {
-              console.log("user update profile done");
-              navigate(location.state || "/");
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+      // 4. save user to database
+      await saveOrUpdateUser({
+        name: data.name,
+        email: data.email,
+        image: imageURL,
       });
+
+      console.log("user profile & db save done");
+
+      navigate(location.state || "/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Google Signup
