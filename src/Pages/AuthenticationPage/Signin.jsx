@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
+import { saveOrUpdateUser } from "../../Routes/Utilis";
 
 const Signin = () => {
   const location = useLocation();
@@ -19,28 +20,54 @@ const Signin = () => {
   const { signInUser, googleSignin } = useAuth();
 
   // email and password signin
-  const handleSignin = (data) => {
-    console.log(data);
-    signInUser(data.email, data.password)
-      .then((result) => {
-        console.log(result);
-        navigate(location?.state || "/");
-      })
-      .catch((error) => {
-        console.log(error);
+  const handleSignin = async (data) => {
+    try {
+      // console.log(data);
+      const result = await signInUser(data.email, data.password);
+      const user = result.user;
+
+      console.log("Signed in user:", user);
+
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
       });
+
+      console.log("User last login updated in DB");
+
+      navigate(location?.state || "/");
+    } catch (error) {
+      console.log(error);
+
+      if (error.code === "auth/user-not-found") {
+      alert("এই email দিয়ে কোনো account পাওয়া যায়নি। আগে Signup করুন।");
+    } else if (error.code === "auth/wrong-password") {
+      alert("Password ভুল হয়েছে। আবার চেষ্টা করুন।");
+    } else {
+      alert("Login করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    }
+    }
   };
 
   // google signin
-  const handleGoogleSignin = () => {
-    googleSignin()
-      .then((result) => {
-        console.log(result.user);
-        navigate(location.state || "/");
-      })
-      .catch((error) => {
-        console.log(error);
+  const handleGoogleSignin = async () => {
+    try {
+      const result = await googleSignin();
+      const user = result.user;
+
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+        provider: "google",
       });
+
+      console.log("Google user saved to DB");
+      navigate(location.state || "/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

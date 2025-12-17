@@ -49,8 +49,8 @@ const Signup = () => {
 
       // 4. save user to database
       await saveOrUpdateUser({
-        name: data.name,
-        email: data.email,
+        name: data?.name,
+        email: data?.email,
         image: imageURL,
       });
 
@@ -59,19 +59,32 @@ const Signup = () => {
       navigate(location.state || "/");
     } catch (error) {
       console.log(error);
+      if (error.code === "auth/email-already-in-use") {
+        alert("এই email দিয়ে আগে থেকেই একটি account আছে। দয়া করে Login করুন।");
+        navigate("/signin");
+      } else {
+        alert("Signup করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+      }
     }
   };
 
   // Google Signup
-  const handleGoogleSignin = () => {
-    googleSignin()
-      .then((result) => {
-        console.log(result.user);
-        navigate(location.state || "/");
-      })
-      .catch((error) => {
-        console.log(error);
+  const handleGoogleSignin = async () => {
+    try {
+      const result = await googleSignin();
+      const user = result.user;
+
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+        provider: "google",
       });
+      console.log("Google user saved to DB");
+      navigate(location.state || "/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
