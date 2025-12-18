@@ -11,7 +11,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [role, isRoleLoading] = useRole();
 
-  console.log(role, isRoleLoading);
+  // console.log(role, isRoleLoading);
 
   const handleUpdate = async (e) => {
     e.preventDefault();

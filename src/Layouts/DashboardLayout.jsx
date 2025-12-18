@@ -16,19 +16,55 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+import useRole from "../Hooks/useRole";
+
+// reusable sidebar item
+const SidebarItem = ({ item, setIsOpen }) => {
+  return (
+    <li>
+      <NavLink
+        to={item.to}
+        onClick={() => setIsOpen(false)}
+        className={({ isActive }) =>
+          `block p-2 rounded-lg ${
+            isActive ? "bg-blue-500 text-white" : "hover:bg-gray-200"
+          }`
+        }
+      >
+        <span className="flex items-center gap-2">
+          <span className="text-xl">{item.icon}</span>
+          {item.label}
+        </span>
+      </NavLink>
+    </li>
+  );
+};
 
 const DashboardLayout = () => {
   const { logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [role, isRoleLoading] = useRole();
 
-  const handleSignOut = () => {
-    logOut()
-      .then()
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+      alert("Successfully signed out!");
+    } catch (error) {
+      console.log(error);
+      alert("Sign out failed. Try again.");
+    }
   };
-  const links = [
+
+  /* ---------- Links ---------- */
+  // Admin
+  const adminLinks = [
+    { to: "/dashboard", label: "Statistics", icon: <FaChartBar /> },
+    { to: "/dashboard/all-users", label: "All Users", icon: <FaUsers /> },
+    { to: "/dashboard/manage-books", label: "Manage Books", icon: <FaTools /> },
+  ];
+
+  // customer
+  const customerLinks = [
     { to: "/dashboard", label: "Statistics", icon: <FaChartBar /> },
     {
       to: "/dashboard/my-orders",
@@ -42,8 +78,10 @@ const DashboardLayout = () => {
       label: "Become A Seller",
       icon: <FaUserShield />,
     },
-
-    // Librarian
+  ];
+  // Librarian
+  const sellerLinks = [
+    { to: "/dashboard", label: "Statistics", icon: <FaChartBar /> },
     { to: "/dashboard/add-book", label: "Add Book", icon: <FaPlusCircle /> },
     { to: "/dashboard/my-books", label: "My Books", icon: <FaBook /> },
     {
@@ -51,11 +89,20 @@ const DashboardLayout = () => {
       label: "Manage Orders",
       icon: <FaClipboardList />,
     },
-
-    // Admin
-    { to: "/dashboard/all-users", label: "All Users", icon: <FaUsers /> },
-    { to: "/dashboard/manage-books", label: "Manage Books", icon: <FaTools /> },
+    {
+      to: "/dashboard/seller-request",
+      label: "Become A Seller",
+      icon: <FaUserShield />,
+    },
   ];
+
+  /* ---------- Choose links based on role ---------- */
+  let links = [];
+  if (!isRoleLoading) {
+    if (role === "admin") links = adminLinks;
+    else if (role === "customer") links = customerLinks;
+    else if (role === "seller") links = sellerLinks;
+  }
 
   return (
     <div className="flex min-h-screen bg-gray-300">
@@ -66,6 +113,7 @@ const DashboardLayout = () => {
           <FaBars className="text-2xl" />
         </button>
       </div>
+
       {/* left sidebar */}
       <aside
         className={`fixed top-0 left-0 h-screen overflow-y-auto w-64 bg-white shadow-lg p-6 transform transition-transform duration-300 
@@ -83,29 +131,14 @@ const DashboardLayout = () => {
         </div>
 
         {/* sidebar menu option */}
-        <ul className="space-y-2 mt-5 lg:mt-0">
+        <ul className="space-y-2">
           {links.map((item, index) => (
-            <li key={index}>
-              <NavLink
-                onClick={() => setIsOpen(false)}
-                to={item.to}
-                className={({ isActive }) =>
-                  `block p-2 rounded-lg ${
-                    isActive ? "bg-blue-500 text-white" : "hover:bg-gray-200"
-                  }`
-                }
-              >
-                <span className="flex items-center gap-2">
-                  {item.icon && <span className="text-xl">{item.icon}</span>}
-                  {item.label}
-                </span>
-              </NavLink>
-            </li>
+            <SidebarItem key={index} item={item} setIsOpen={setIsOpen} />
           ))}
         </ul>
 
         {/* profile and logout */}
-        <div className="p-2 border-t-2 mt-2 space-y-2">
+        <div className="border-t-2 mt-6 pt-4 space-y-2">
           {/* My Profile Button */}
           <NavLink
             to="/dashboard/profile"
@@ -131,6 +164,7 @@ const DashboardLayout = () => {
         </div>
       </aside>
 
+      {/* Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0  bg-opacity-40 lg:hidden z-40"
