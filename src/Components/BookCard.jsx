@@ -1,9 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GiSelfLove } from "react-icons/gi";
 import { IoArrowRedoCircleSharp } from "react-icons/io5";
 import { Link } from "react-router";
 
 const BookCard = ({ book }) => {
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  // check book already in wishlist
+  useEffect(() => {
+    // use a microtask to avoid sync setState inside effect
+    const checkWishlist = () => {
+      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      const exist = wishlist.find((item) => item._id === book._id);
+      setIsWishlisted(!!exist);
+    };
+    // schedule after current render
+    setTimeout(checkWishlist, 0);
+  }, [book._id]);
+
+  // toggle wishlist
+  const toggleWishlist = () => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const exist = wishlist.find((item) => item._id === book._id);
+
+    if (exist) {
+      // remove
+      const updated = wishlist.filter((item) => item._id !== book._id);
+      localStorage.setItem("wishlist", JSON.stringify(updated));
+      setIsWishlisted(false);
+      alert(`${book.name} removed from wishlist`);
+    } else {
+      // add
+      wishlist.push(book);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      setIsWishlisted(true);
+      // alert(`${book.name} added to wishlist`);
+    }
+  };
+
   return (
     <div className="card bg-base-100 shadow-lg">
       <figure>
@@ -33,10 +67,15 @@ const BookCard = ({ book }) => {
 
         <div className="card-actions justify-end mt-3 flex items-center gap-3">
           <div className="flex items-center gap-1 badge badge-outline">
-            <Link to="/" className="font-bold flex items-center gap-1">
+            <span
+              onClick={toggleWishlist}
+              className={`font-bold flex items-center gap-1 cursor-pointer ${
+                isWishlisted ? "text-red-500" : "text-gray-700"
+              }`}
+            >
               Wishlist
-              <GiSelfLove className="text-xl text-red-500" />
-            </Link>
+              <GiSelfLove className="text-xl" />
+            </span>
           </div>
           <div className="flex items-center gap-1 badge badge-outline">
             <Link
