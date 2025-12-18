@@ -2,30 +2,31 @@ import React from "react";
 import useAuth from "../../../Hooks/useAuth";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Loading from "../../../Components/Loading";
 
 const MyOrders = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure()
 
   const {
     data: orders = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["my-orders", user?.email],
+    queryKey: ["my-orders"],
+     enabled: !!user,
     queryFn: async () => {
-      const res = await axios.get(
-        // fetch all orders (user)
-        `http://localhost:3000/orders?email=${user.email}`
-      );
+      const res = await axiosSecure.get("/orders");
       return res.data;
     },
     refetchInterval: 2000, // auto page update no refash
   });
 
+  if (isLoading) return <Loading/>;
+
   // newest orders first
   const sortedOrders = orders.slice().reverse();
-
-  if (isLoading) return <p>Loading...</p>;
 
   // cancel order
   const handleCancel = async (id) => {
