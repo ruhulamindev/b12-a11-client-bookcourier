@@ -13,16 +13,15 @@ const useAxiosSecure = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || !user) return;
 
     // request interceptor
     const requestInterceptor = axiosSecure.interceptors.request.use(
-      (config) => {
-        if (user?.accessToken) {
-          config.headers.Authorization = `Bearer ${user.accessToken}`;
-        }
-        return config;
-      },
+      async (config) => {
+        const token = await user.getIdToken();
+          config.headers.Authorization = `Bearer ${token}`;
+          return config;
+        },
       (error) => Promise.reject(error)
     );
 

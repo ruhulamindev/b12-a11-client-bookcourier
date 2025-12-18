@@ -1,78 +1,66 @@
 import React from "react";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../../Components/Loading";
 
 const Invoices = () => {
   // Static invoices data (placeholder)
-  const invoices = [
-    {
-      id: 1,
-      orderId: 101,
-      date: "2025-12-01",
-      amount: "$50",
-      status: "Paid",
+  const axiosSecure = useAxiosSecure();
+
+  const { data: invoices = [], isLoading } = useQuery({
+    queryKey: ["invoices"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/invoices");
+      return res.data;
     },
-    {
-      id: 2,
-      orderId: 102,
-      date: "2025-12-03",
-      amount: "$30",
-      status: "Pending",
-    },
-    {
-      id: 3,
-      orderId: 103,
-      date: "2025-12-05",
-      amount: "$60",
-      status: "Paid",
-    },
-  ];
+  });
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-6">My Invoices</h1>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg shadow">
+      <div className="overflow-x-auto bg-white rounded-xl shadow">
+        <table className="min-w-full">
           <thead className="bg-gray-100">
             <tr>
-              <th className="py-3 px-4 text-left">Invoice ID</th>
-              <th className="py-3 px-4 text-left">Order ID</th>
-              <th className="py-3 px-4 text-left">Date</th>
+              <th className="py-3 px-4 text-left">Payment ID</th>
+              <th className="py-3 px-4 text-left">Book Name</th>
               <th className="py-3 px-4 text-left">Amount</th>
+              <th className="py-3 px-4 text-left">Date</th>
               <th className="py-3 px-4 text-left">Status</th>
-              <th className="py-3 px-4 text-left">Action</th>
             </tr>
           </thead>
+
           <tbody>
-            {invoices.map((invoice) => (
-              <tr
-                key={invoice.id}
-                className="border-b hover:bg-gray-50 transition-colors"
-              >
-                <td className="py-3 px-4">{invoice.id}</td>
-                <td className="py-3 px-4">{invoice.orderId}</td>
-                <td className="py-3 px-4">{invoice.date}</td>
-                <td className="py-3 px-4">{invoice.amount}</td>
-                <td className="py-3 px-4">
-                  <span
-                    className={`px-2 py-1 rounded-full text-white font-medium ${
-                      invoice.status === "Paid"
-                        ? "bg-green-500"
-                        : "bg-yellow-500"
-                    }`}
-                  >
-                    {invoice.status}
-                  </span>
-                </td>
-                <td className="py-3 px-4 flex gap-2">
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-                    View
-                  </button>
-                  <button className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded">
-                    Download
-                  </button>
+            {invoices.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="py-6 text-center text-gray-500">
+                  No invoices found
                 </td>
               </tr>
-            ))}
+            ) : (
+              invoices.map((invoice) => (
+                <tr
+                  key={invoice._id}
+                  className="border-b hover:bg-gray-50 transition-colors"
+                >
+                  <td className="py-3 px-4">{invoice.transactionId}</td>
+                  <td className="py-3 px-4">{invoice.bookName}</td>
+                  <td className="p-3 font-semibold">
+                    ${invoice.bookPrice} × {invoice.quantity} = $
+                    {invoice.bookPrice * invoice.quantity}
+                  </td>
+                  <td className="py-3 px-4">{invoice.orderDate}</td>
+                  <td className="p-3">
+                    <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 font-semibold">
+                      Paid
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

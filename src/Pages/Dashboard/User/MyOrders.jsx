@@ -7,7 +7,7 @@ import Loading from "../../../Components/Loading";
 
 const MyOrders = () => {
   const { user } = useAuth();
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
 
   const {
     data: orders = [],
@@ -15,7 +15,7 @@ const MyOrders = () => {
     refetch,
   } = useQuery({
     queryKey: ["my-orders"],
-     enabled: !!user,
+    enabled: !!user,
     queryFn: async () => {
       const res = await axiosSecure.get("/orders");
       return res.data;
@@ -23,7 +23,7 @@ const MyOrders = () => {
     refetchInterval: 2000, // auto page update no refash
   });
 
-  if (isLoading) return <Loading/>;
+  if (isLoading) return <Loading />;
 
   // newest orders first
   const sortedOrders = orders.slice().reverse();
