@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useAuth from "../Hooks/useAuth";
 import axios from "axios";
+import useRole from "../Hooks/useRole";
 
 const Profile = () => {
   const { user, updateUserProfile } = useAuth();
@@ -8,6 +9,9 @@ const Profile = () => {
   const [name, setName] = useState(user?.displayName || "");
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [role, isRoleLoading] = useRole();
+
+  console.log(role, isRoleLoading);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -50,19 +54,37 @@ const Profile = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center gap-6 w-full max-w-sm">
-        {/* PROFILE IMAGE */}
-        <img
-          src={user?.photoURL || "https://via.placeholder.com/150"}
-          alt="profile"
-          className="w-32 h-32 rounded-full border-4 border-blue-500 shadow object-cover"
-        />
+        <div className="flex flex-col items-center">
+          {/* profile image */}
+          <img
+            src={user?.photoURL || "https://via.placeholder.com/150"}
+            alt="profile"
+            className="w-32 h-32 rounded-full border-4 border-blue-500 shadow object-cover"
+          />
+          {/* role */}
+          {!isRoleLoading && role && (
+            <span
+              className={`px-6 py-1 rounded-full text-sm font-semibold
+      ${
+        role === "admin"
+          ? "bg-red-100 text-red-600"
+          : role === "seller"
+          ? "bg-green-100 text-green-600"
+          : "bg-blue-100 text-blue-600"
+      }
+    `}
+            >
+              {role.toUpperCase()}
+            </span>
+          )}
+        </div>
 
-        {/* NAME */}
+        {/* name */}
         <h2 className="text-2xl font-bold text-gray-800">
           {user?.displayName || "User Name"}
         </h2>
 
-        {/* EMAIL */}
+        {/* email */}
         <p className="text-gray-500">{user?.email || "user@example.com"}</p>
 
         {/* profile update button */}
