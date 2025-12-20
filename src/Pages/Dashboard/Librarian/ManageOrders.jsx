@@ -14,7 +14,7 @@ const ManageOrders = () => {
     queryFn: async () => {
       // fetch all orders (seller)
       const res = await axios.get(
-        `http://localhost:3000/orders/librarian?email=${user.email}`
+        `https://b12-a11-client-bookcourier.vercel.app/orders/librarian?email=${user.email}`
       );
       return res.data;
     },
@@ -27,7 +27,7 @@ const ManageOrders = () => {
 
   // change order status
   const handleStatusChange = async (orderId, newStatus) => {
-    await axios.patch(`http://localhost:3000/orders/status/${orderId}`, {
+    await axios.patch(`https://b12-a11-client-bookcourier.vercel.app/orders/status/${orderId}`, {
       status: newStatus,
     });
     refetch(); // auto page update no refash
@@ -38,7 +38,7 @@ const ManageOrders = () => {
     const confirm = window.confirm("Are you sure to cancel this order?");
     if (!confirm) return;
 
-    await axios.patch(`http://localhost:3000/orders/cancel/${orderId}`);
+    await axios.patch(`https://b12-a11-client-bookcourier.vercel.app/orders/cancel/${orderId}`);
     refetch(); // auto page update no refash
   };
 

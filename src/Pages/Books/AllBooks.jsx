@@ -12,7 +12,7 @@ const AllBooks = () => {
   } = useQuery({
     queryKey: ["all-books"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/books_all");
+      const res = await axios.get("https://b12-a11-client-bookcourier.vercel.app/books_all");
       return res.data.filter((book) => book.status === "published");
     },
   });
