@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-  baseURL: "https://b12-a11-server-bookcourier.vercel.app/",
+  baseURL: "https://b12-a11-server-bookcourier.vercel.app",
   withCredentials: true,
 });
 

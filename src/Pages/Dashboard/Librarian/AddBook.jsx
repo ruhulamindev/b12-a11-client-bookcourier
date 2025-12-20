@@ -22,7 +22,7 @@ const AddBook = () => {
   const addBookMutation = useMutation({
     mutationFn: async (bookData) => {
       const response = await axios.post(
-        "https://b12-a11-server-bookcourier.vercel.app//books_all",
+        "https://b12-a11-server-bookcourier.vercel.app/books_all",
         bookData
       );
       return response.data;

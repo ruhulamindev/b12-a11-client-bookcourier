@@ -12,7 +12,7 @@ const LatestBooks = () => {
   } = useQuery({
     queryKey: ["latest-books"],
     queryFn: async () => {
-      const res = await axios.get("https://b12-a11-server-bookcourier.vercel.app//books_all");
+      const res = await axios.get("https://b12-a11-server-bookcourier.vercel.app/books_all");
       return res.data.filter((book) => book.status === "published");
     },
   });
