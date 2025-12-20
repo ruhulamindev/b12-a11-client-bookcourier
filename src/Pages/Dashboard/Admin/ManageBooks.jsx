@@ -17,7 +17,7 @@ const ManageBooks = () => {
     queryKey: ["all-books"],
     queryFn: async () => {
       if (!user?.email) return [];
-      const res = await axios.get("https://b12-a11-client-bookcourier.vercel.app/books_all");
+      const res = await axios.get("https://b12-a11-server-bookcourier.vercel.app//books_all");
       return res.data;
     },
   });
@@ -33,7 +33,7 @@ const ManageBooks = () => {
       };
 
       await axios.patch(
-        `https://b12-a11-client-bookcourier.vercel.app/books_all/${selectedBook._id}`,
+        `https://b12-a11-server-bookcourier.vercel.app//books_all/${selectedBook._id}`,
         updatedData
       );
       alert("Book updated successfully!");
@@ -53,7 +53,7 @@ const ManageBooks = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`https://b12-a11-client-bookcourier.vercel.app/books_all/${bookId}`);
+      await axios.delete(`https://b12-a11-server-bookcourier.vercel.app//books_all/${bookId}`);
       alert("Book deleted successfully!");
       refetch(); // page refresh
     } catch (error) {

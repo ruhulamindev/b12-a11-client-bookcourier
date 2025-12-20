@@ -33,7 +33,7 @@ const MyOrders = () => {
     const confirm = window.confirm("Are you sure want to cancel this order?");
     if (!confirm) return;
 
-    await axios.patch(`https://b12-a11-client-bookcourier.vercel.app/orders/cancel/${id}`);
+    await axios.patch(`https://b12-a11-server-bookcourier.vercel.app//orders/cancel/${id}`);
     refetch(); // auto page update no refash
   };
 
@@ -59,7 +59,7 @@ const MyOrders = () => {
     // console.log("PAYMENT INFO (Frontend)", paymentInfo);
     try {
       const { data } = await axios.post(
-        "https://b12-a11-client-bookcourier.vercel.app/create-checkout-session",
+        "https://b12-a11-server-bookcourier.vercel.app//create-checkout-session",
         paymentInfo
       );
 
