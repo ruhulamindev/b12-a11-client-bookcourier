@@ -8,9 +8,9 @@ const Statistics = () => {
 
   if (isRoleLoading) {
     return (
-      <p>
+      <div className="flex-1 flex items-center justify-center min-h-screen">
         <Loading />
-      </p>
+      </div>
     );
   }
 
@@ -80,7 +80,11 @@ const Statistics = () => {
       },
     ];
   } else {
-    return <p>Role not defined</p>;
+    return (
+      <div className="flex-1 flex items-center justify-center min-h-screen">
+        <Loading />
+      </div>
+    );
   }
 
   return (

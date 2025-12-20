@@ -74,8 +74,8 @@ const DashboardLayout = () => {
     { to: "/dashboard/invoices", label: "Invoices", icon: <FaFileInvoice /> },
     { to: "/dashboard/wishlist", label: "My Wishlist", icon: <FaHeart /> },
     {
-      to: "/dashboard/seller-request",
-      label: "Become A Seller",
+      to: "/dashboard/librarian-requests",
+      label: "Become A librarian",
       icon: <FaUserShield />,
     },
   ];
@@ -88,11 +88,6 @@ const DashboardLayout = () => {
       to: "/dashboard/manage-orders",
       label: "Manage Orders",
       icon: <FaClipboardList />,
-    },
-    {
-      to: "/dashboard/seller-request",
-      label: "Become A Seller",
-      icon: <FaUserShield />,
     },
   ];
 

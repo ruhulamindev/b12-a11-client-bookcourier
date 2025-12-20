@@ -16,7 +16,7 @@ import MyBooks from "../Pages/Dashboard/Librarian/MyBooks";
 import ManageOrders from "../Pages/Dashboard/Librarian/ManageOrders";
 import Invoices from "../Pages/Dashboard/User/Invoices";
 import Wishlist from "../Pages/Dashboard/User/Wishlist";
-import SellerRequest from "../Pages/Dashboard/User/SellerRequest";
+import LibrarianRequest from "../Pages/Dashboard/User/LibrarianRequest";
 import AllUsers from "../Pages/Dashboard/Admin/AllUsers";
 import ManageBooks from "../Pages/Dashboard/Admin/ManageBooks";
 import PaymentPage from "../Pages/PaymentPage";
@@ -82,7 +82,7 @@ export const router = createBrowserRouter([
     { path: "my-orders", element: <MyOrders/> },
     { path: "invoices", element: <Invoices/> },
     { path: "wishlist", element: <Wishlist/> },
-    { path: "seller-request", element: <SellerRequest/> },
+    { path: "librarian-requests", element: <LibrarianRequest/> },
     
     // --- Librarian Routes ---
     { path: "add-book", element: <AddBook /> },
