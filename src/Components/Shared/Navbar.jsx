@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../Logo/logo";
+import Logo from "../Logo/Logo";
 import { NavLink } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 
