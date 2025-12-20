@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router";
-import Logo from "../Components/Logo/logo";
+import Logo from "../Components/Logo/Logo";
 import useAuth from "../Hooks/useAuth";
 import {
   FaChartBar,
