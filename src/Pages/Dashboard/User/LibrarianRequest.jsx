@@ -1,26 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useState } from "react";
 import useAxiosSecure from "./../../../Hooks/useAxiosSecure";
 
 const LibrarianRequest = () => {
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const [requests, setRequests] = useState([]);
-
-  // fetch user requests
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosSecure.get("/librarian-requests");
-        if (response?.data) setRequests(response.data);
-      } catch (err) {
-        console.error("Failed to fetch requests:", err);
-      }
-    };
-
-    fetchData();
-  }, [axiosSecure]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,14 +18,10 @@ const LibrarianRequest = () => {
       if (response?.status === 200 || response?.status === 201) {
         alert("Librarian request sent. Please wait for admin approval!");
         setMessage("");
-        const updatedRequests = await axiosSecure.get("/librarian-requests");
-        if (updatedRequests?.data) setRequests(updatedRequests.data);
       }
     } catch (error) {
-      if (error.response?.status === 409) {
-        alert(
-          error.response.data?.message || "You have already sent a request!"
-        );
+      if (error.response && error.response.status === 409) {
+        alert(error.response.data.message);
       } else {
         alert(error?.response?.data?.message || "Something went wrong");
       }
@@ -64,10 +43,9 @@ const LibrarianRequest = () => {
           <label className="block text-gray-700 font-medium mb-1">
             Why do you want to become a librarian?
           </label>
-          <textarea
+          <input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            rows={5}
             placeholder="Write your reason here..."
             className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
@@ -83,42 +61,13 @@ const LibrarianRequest = () => {
           </button>
           <button
             type="button"
-            onClick={() => navigate(-1)}
+            onClick={() => setMessage("")}
             className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold"
           >
             Cancel
           </button>
         </div>
       </form>
-
-      <div className="mt-6">
-        {requests.length === 0 ? (
-          <p className="text-center text-gray-500">No requests yet</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full border border-gray-300 rounded-lg">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="px-4 py-2 border">Message</th>
-                  <th className="px-4 py-2 border">Status</th>
-                  <th className="px-4 py-2 border">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {requests.map((req) => (
-                  <tr key={req._id} className="text-center">
-                    <td className="px-4 py-2 border">{req.message}</td>
-                    <td className="px-4 py-2 border">{req.status}</td>
-                    <td className="px-4 py-2 border">
-                      {new Date(req.createdAt).toLocaleDateString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
     </div>
   );
 };

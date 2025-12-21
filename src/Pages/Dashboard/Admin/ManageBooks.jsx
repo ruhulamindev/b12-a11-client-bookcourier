@@ -95,7 +95,7 @@ const ManageBooks = () => {
                 </td>
                 <td className="py-3 px-4">{book.name}</td>
                 <td className="py-3 px-4">{book.category}</td>
-                <td className="py-3 px-4">{book.price}</td>
+                <td className="py-3 px-4">{book.price}$</td>
                 <td className="py-3 px-4">{book.status}</td>
                 <td className="py-3 px-4">
                   <div className="flex items-center gap-2">
