@@ -1,30 +1,20 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const AllUsers = () => {
-  // Static user data (placeholder)
-  const users = [
-    {
-      id: 1,
-      name: "Ruhul Amin",
-      email: "ruhul@example.com",
-      role: "User",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Sadia Khan",
-      email: "sadia@example.com",
-      role: "Seller",
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      name: "Admin User",
-      email: "admin@example.com",
-      role: "Admin",
-      status: "Active",
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/users`);
+        setUsers(res.data);
+      } catch (err) {
+        console.error("Failed to fetch users:", err);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   return (
     <div className="p-4">
@@ -37,21 +27,23 @@ const AllUsers = () => {
               <th className="py-3 px-4 text-left">Name</th>
               <th className="py-3 px-4 text-left">Email</th>
               <th className="py-3 px-4 text-left">Role</th>
-              <th className="py-3 px-4 text-left">Status</th>
               <th className="py-3 px-4 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr
-                key={user.id}
+                key={user._id}
                 className="border-b hover:bg-gray-50 transition-colors"
               >
                 <td className="py-3 px-4">{user.name}</td>
                 <td className="py-3 px-4">{user.email}</td>
                 <td className="py-3 px-4">{user.role}</td>
-                <td className="py-3 px-4">{user.status}</td>
-                <td className="py-3 px-4">update Role</td>
+                <td className="py-3 px-4">
+                  <button className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Update Role
+                  </button>
+                </td>{" "}
               </tr>
             ))}
           </tbody>

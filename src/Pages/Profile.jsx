@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "../Hooks/useAuth";
 import axios from "axios";
 import useRole from "../Hooks/useRole";
@@ -10,8 +10,27 @@ const Profile = () => {
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [role, isRoleLoading] = useRole();
+  const [dbUser, setDbUser] = useState(null);
 
   // console.log(role, isRoleLoading);
+
+  // fetch user data from MongoDB
+  useEffect(() => {
+    const fetchDbUser = async () => {
+      try {
+        const token = await user.getIdToken();
+        const res = await axios.get("http://localhost:3000/user/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setDbUser(res.data);
+        setName(res.data.name || user?.displayName || "");
+      } catch (err) {
+        console.error("Failed to fetch DB user:", err);
+      }
+    };
+
+    if (user?.email) fetchDbUser();
+  }, [user]);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -41,8 +60,18 @@ const Profile = () => {
         photoURL,
       });
 
+      // update MongoDB user
+      const token = await user.getIdToken();
+      await axios.patch(
+        "http://localhost:3000/user/profile/update",
+        { name, image: photoURL },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
       alert("Profile updated successfully!");
       setOpen(false);
+
+      setDbUser((prev) => ({ ...prev, name, image: photoURL }));
     } catch (error) {
       console.error(error);
       alert("Profile update failed!");
@@ -57,8 +86,12 @@ const Profile = () => {
         <div className="flex flex-col items-center">
           {/* profile image */}
           <img
-            src={user?.photoURL || "https://via.placeholder.com/150"}
-            alt="profile"
+            src={
+              dbUser?.image ||
+              user?.photoURL ||
+              "https://via.placeholder.com/150"
+            }
+            alt={dbUser?.name || user?.displayName || "User"}
             className="w-32 h-32 rounded-full border-4 border-blue-500 shadow object-cover"
           />
           {/* role */}
