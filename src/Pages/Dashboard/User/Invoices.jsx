@@ -27,7 +27,7 @@ const Invoices = () => {
             <tr>
               <th className="py-3 px-4 text-left">Payment ID</th>
               <th className="py-3 px-4 text-left">Book Name</th>
-              <th className="py-3 px-4 text-left">Amount</th>
+              <th className="py-3 px-4 text-left">Price</th>
               <th className="py-3 px-4 text-left">Date</th>
               <th className="py-3 px-4 text-left">Status</th>
             </tr>

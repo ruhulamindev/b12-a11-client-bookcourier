@@ -49,7 +49,8 @@ const Wishlist = () => {
                   <td className="py-3 px-4">{item.name}</td>
                   <td className="py-3 px-4">{item.category}</td>
                   <td className="py-3 px-4">${item.price}</td>
-                  <td className="py-3 px-4 flex gap-2">
+                  <td className="py-3 px-4">
+                   <div className="flex items-center gap-2"> 
                     <Link
                       to={`/details/${item._id}`}
                       className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
@@ -62,6 +63,7 @@ const Wishlist = () => {
                     >
                       Remove
                     </button>
+                    </div>
                   </td>
                 </tr>
               ))}
