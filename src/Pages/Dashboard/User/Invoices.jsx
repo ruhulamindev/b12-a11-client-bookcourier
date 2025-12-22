@@ -21,7 +21,7 @@ const Invoices = () => {
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-6">My Invoices</h1>
 
-      <div className="overflow-x-auto bg-white rounded-xl shadow">
+      <div className="overflow-x-auto bg-white rounded-xl shadow whitespace-nowrap">
         <table className="min-w-full">
           <thead className="bg-gray-100">
             <tr>

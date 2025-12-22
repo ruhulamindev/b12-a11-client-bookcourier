@@ -23,7 +23,7 @@ const Wishlist = () => {
         <p className="text-gray-500">No books in your wishlist</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white rounded-lg shadow">
+          <table className="min-w-full bg-white rounded-lg shadow whitespace-nowrap">
             <thead className="bg-gray-100">
               <tr>
                 <th className="py-3 px-4 text-left">Image</th>

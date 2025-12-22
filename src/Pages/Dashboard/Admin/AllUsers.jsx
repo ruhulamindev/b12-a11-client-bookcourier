@@ -83,7 +83,7 @@ const [loading, setLoading] = useState(false);
       <h1 className="text-3xl font-bold mb-6">All Users</h1>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg shadow">
+        <table className="min-w-full bg-white rounded-lg whitespace-nowrap shadow">
           <thead className="bg-gray-100">
             <tr>
               <th className="py-3 px-4 text-left">Name</th>
