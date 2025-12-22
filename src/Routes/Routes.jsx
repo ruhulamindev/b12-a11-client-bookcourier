@@ -20,6 +20,9 @@ import LibrarianRequest from "../Pages/Dashboard/User/LibrarianRequest";
 import AllUsers from "../Pages/Dashboard/Admin/AllUsers";
 import ManageBooks from "../Pages/Dashboard/Admin/ManageBooks";
 import PaymentPage from "../Pages/PaymentPage";
+import LibrarianRoute from "./LibrarianRoute";
+import AdminRoute from "./AdminRoute";
+import CustomerRoute from "./CustomerRoute";
 
 export const router = createBrowserRouter([
   {
@@ -55,8 +58,12 @@ export const router = createBrowserRouter([
         element: <Signup />,
       },
       {
-        path:"payment",
-        element:<PaymentPage/>
+        path: "payment",
+        element: (
+          <PrivateRoute>
+            <PaymentPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "profile",
@@ -68,6 +75,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+
   // dashboardLayout
   {
     path: "/dashboard",
@@ -77,22 +85,118 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      // --- User Routes ---
-    { index: true, element: <Statistics/> },
-    { path: "my-orders", element: <MyOrders/> },
-    { path: "invoices", element: <Invoices/> },
-    { path: "wishlist", element: <Wishlist/> },
-    { path: "librarian-requests", element: <LibrarianRequest/> },
-    
-    // --- Librarian Routes ---
-    { path: "add-book", element: <AddBook /> },
-    { path: "my-books", element: <MyBooks/> },
-    { path: "manage-orders", element:<ManageOrders/> },
-    
-    // --- Admin Routes ---
-    { path: "all-users", element: <AllUsers/> },
-    { path: "manage-books", element: <ManageBooks/> },
-    { path: "profile", element: <Profile /> },
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <Statistics />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+
+      // --- Customer Routes ---
+      {
+        path: "my-orders",
+        element: (
+          <PrivateRoute>
+            <CustomerRoute>
+              <MyOrders />
+            </CustomerRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "invoices",
+        element: (
+          <PrivateRoute>
+            <CustomerRoute>
+              <Invoices />
+            </CustomerRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "wishlist",
+        element: (
+          <PrivateRoute>
+            <CustomerRoute>
+              <Wishlist />
+            </CustomerRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "librarian-requests",
+        element: (
+          <PrivateRoute>
+            <CustomerRoute>
+              <LibrarianRequest />
+            </CustomerRoute>
+          </PrivateRoute>
+        ),
+      },
+
+      // --- Librarian Routes ---
+      {
+        path: "add-book",
+        element: (
+          <PrivateRoute>
+            <LibrarianRoute>
+              <AddBook />
+            </LibrarianRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-books",
+        element: (
+          <PrivateRoute>
+            <LibrarianRoute>
+              <MyBooks />
+            </LibrarianRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-orders",
+        element: (
+          <PrivateRoute>
+            <LibrarianRoute>
+              <ManageOrders />
+            </LibrarianRoute>
+          </PrivateRoute>
+        ),
+      },
+
+      // --- Admin Routes ---
+      {
+        path: "all-users",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AllUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-books",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageBooks />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {

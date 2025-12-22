@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
@@ -12,14 +11,15 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/users`);
-        setUsers(res.data);
+        const res = await axiosSecure.get(`/users`);
+        console.log("Fetched users:", res.data);
+        setUsers(res.data || []);
       } catch (err) {
         console.error("Failed to fetch users:", err);
       }
     };
     fetchUsers();
-  }, []);
+  }, [axiosSecure]);
 
   // fetch librarian requests
   useEffect(() => {
@@ -33,7 +33,9 @@ const AllUsers = () => {
     };
 
     fetchRequests();
-  }, []);
+    const interval = setInterval(fetchRequests, 3000);
+    return () => clearInterval(interval);
+  }, [axiosSecure]);
 
   // handle role update
   const handleRoleUpdate = async (userId, newRole) => {
@@ -41,11 +43,9 @@ const AllUsers = () => {
     try {
       // librarian hole backend a seller hobe
       const backendRole = newRole === "librarian" ? "seller" : newRole;
-
-      const res = await axios.patch(
-        `http://localhost:3000/user/role/${userId}`,
-        { newRole: backendRole }
-      );
+      const res = await axiosSecure.patch(`/user/role/${userId}`, {
+        newRole: backendRole,
+      });
 
       if (res.data.success) {
         setUsers((prev) =>
@@ -88,59 +88,68 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr
-                key={user._id}
-                className="border-b hover:bg-gray-50 transition-colors"
-              >
-                <td className="py-3 px-4">{user.name}</td>
-                <td className="py-3 px-4">{user.email}</td>
-                <td className="py-3 px-4">
-                  <span
-                    className={`px-2 py-1 rounded font-semibold ${
-                      user.role === "admin"
-                        ? "bg-red-100 text-red-800"
-                        : user.role === "seller"
-                        ? "bg-blue-100 text-blue-800"
-                        : "bg-green-100 text-green-800"
-                    }`}
+            {Array.isArray(users) &&
+              users
+                .filter((u) => u.role !== "admin")
+                .map((user) => (
+                  <tr
+                    key={user._id}
+                    className="border-b hover:bg-gray-50 transition-colors"
                   >
-                    {user.role === "seller" ? "Librarian" : user.role}
-                  </span>
-                </td>
-                <td className="py-3 px-4">
-                  <select
-                    disabled={loading}
-                    className="border rounded px-2 py-1"
-                    onChange={(e) => handleRoleUpdate(user._id, e.target.value)}
-                    value={user.role === "seller" ? "librarian" : user.role}
-                  >
-                    <option value="customer">Customer</option>
-                    <option value="librarian">Librarian</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </td>
-
-                <td className="py-3 px-4">
-                  {hasRequest(user.email) ? (
-                    <div className="space-y-2">
-                      <p className="text-sm text-gray-600">
-                        Librarian request pending
-                      </p>
-
-                      <button
-                        onClick={() => handleRoleUpdate(user._id, "librarian")}
-                        className="px-3 py-1 bg-green-500 text-white rounded text-sm"
+                    <td className="py-3 px-4">{user.name}</td>
+                    <td className="py-3 px-4">{user.email}</td>
+                    <td className="py-3 px-4">
+                      <span
+                        className={`px-2 py-1 rounded font-semibold ${
+                          user.role === "admin"
+                            ? "bg-red-100 text-red-800"
+                            : user.role === "seller"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-green-100 text-green-800"
+                        }`}
                       >
-                        Approve
-                      </button>
-                    </div>
-                  ) : (
-                    <span className="text-gray-400 text-sm">No Request</span>
-                  )}
-                </td>
-              </tr>
-            ))}
+                        {user.role === "seller" ? "Librarian" : user.role}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <select
+                        disabled={loading}
+                        className="border rounded px-2 py-1"
+                        onChange={(e) =>
+                          handleRoleUpdate(user._id, e.target.value)
+                        }
+                        value={user.role === "seller" ? "librarian" : user.role}
+                      >
+                        <option value="customer">Customer</option>
+                        <option value="librarian">Librarian</option>
+                        <option value="admin">Admin</option>
+                      </select>
+                    </td>
+
+                    <td className="py-3 px-4">
+                      {hasRequest(user.email) ? (
+                        <div className="space-y-2">
+                          <p className="text-sm text-gray-600">
+                            Librarian request pending
+                          </p>
+
+                          <button
+                            onClick={() =>
+                              handleRoleUpdate(user._id, "librarian")
+                            }
+                            className="px-3 py-1 bg-green-500 text-white rounded text-sm"
+                          >
+                            Approve
+                          </button>
+                        </div>
+                      ) : (
+                        <span className="text-gray-400 text-sm">
+                          No Request
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </table>
       </div>

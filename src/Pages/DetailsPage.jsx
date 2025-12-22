@@ -59,7 +59,14 @@ const DetailsPage = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/orders", orderData);
+      const token = await user.getIdToken();
+
+      await axios.post("http://localhost:3000/orders", orderData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       alert("Order placed successfully!");
       setOpen(false);
       reset();

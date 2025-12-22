@@ -5,16 +5,24 @@ import useAuth from "../../../Hooks/useAuth";
 
 const ManageOrders = () => {
   const { user } = useAuth();
+
   const {
     data: orders = [],
     isLoading,
     refetch,
   } = useQuery({
     queryKey: ["manage-orders", user?.email],
+    enabled: !!user,
     queryFn: async () => {
+      const token = await user.getIdToken(); 
       // fetch all orders (seller)
       const res = await axios.get(
-        `http://localhost:3000/orders/librarian?email=${user.email}`
+        `http://localhost:3000/orders/librarian?email=${user.email}`,
+        {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
       return res.data;
     },
@@ -27,9 +35,12 @@ const ManageOrders = () => {
 
   // change order status
   const handleStatusChange = async (orderId, newStatus) => {
-    await axios.patch(`http://localhost:3000/orders/status/${orderId}`, {
-      status: newStatus,
-    });
+    await axios.patch(
+      `http://localhost:3000/orders/status/${orderId}`,
+      {
+        status: newStatus,
+      }
+    );
     refetch(); // auto page update no refash
   };
 
@@ -38,8 +49,23 @@ const ManageOrders = () => {
     const confirm = window.confirm("Are you sure to cancel this order?");
     if (!confirm) return;
 
-    await axios.patch(`http://localhost:3000/orders/cancel/${orderId}`);
-    refetch(); // auto page update no refash
+    try {
+      const token = await user.getIdToken();
+      await axios.patch(
+        `http://localhost:3000/orders/cancel/${orderId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      refetch(); // auto page update no refash
+      alert("Order cancelled successfully!");
+    } catch (err) {
+      console.log(err);
+      alert("Failed to cancel order");
+    }
   };
 
   return (

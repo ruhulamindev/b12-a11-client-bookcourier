@@ -12,7 +12,12 @@ const MyBooks = () => {
     queryKey: ["my-books", user?.email],
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:3000/books/seller?email=${user.email}`
+        `http://localhost:3000/books/seller?email=${user.email}`,
+        {
+          headers: {
+            authorization: `Bearer ${await user.getIdToken()}`,
+          },
+        }
       );
       return res.data;
     },

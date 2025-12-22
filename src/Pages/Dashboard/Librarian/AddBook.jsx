@@ -23,7 +23,12 @@ const AddBook = () => {
     mutationFn: async (bookData) => {
       const response = await axios.post(
         "http://localhost:3000/books_all",
-        bookData
+        bookData,
+        {
+          headers: {
+            authorization: `Bearer ${await user.getIdToken()}`,
+          },
+        }
       );
       return response.data;
     },
