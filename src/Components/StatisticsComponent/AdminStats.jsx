@@ -72,26 +72,22 @@ const AdminStats = () => {
     {
       title: "Total Paid ($)",
       value: `$${data.totalRevenue}`,
-      icon: <FaDollarSign className="text-4xl text-blue-600" />,
-      bg: "bg-blue-100",
+      icon: <FaDollarSign className="w-12 h-12 text-white p-2 rounded-full bg-blue-600" />,
     },
     {
       title: "Total Orders",
       value: data.totalOrders,
-      icon: <FaShoppingBag className="text-4xl text-green-600" />,
-      bg: "bg-green-100",
+      icon: <FaShoppingBag className="w-12 h-12 text-white p-2 rounded-full bg-blue-600" />,
     },
     {
       title: "Cancelled Orders",
       value: data.cancelledOrders,
-      icon: <FaBan className="text-4xl text-red-600" />,
-      bg: "bg-red-100",
+      icon: <FaBan className="w-12 h-12 text-white p-2 rounded-full bg-blue-600" />,
     },
     {
       title: "Total Users",
       value: data.totalUsers,
-      icon: <FaUsers className="text-4xl text-orange-600" />,
-      bg: "bg-orange-100",
+      icon: <FaUsers className="w-12 h-12 text-white p-2 rounded-full bg-blue-600" />,
     },
   ];
 
