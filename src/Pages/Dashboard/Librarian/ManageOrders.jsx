@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
+import Loading from './../../../Components/Loading';
 
 const ManageOrders = () => {
   const { user } = useAuth();
@@ -31,7 +32,7 @@ const ManageOrders = () => {
   // newest orders first
   const sortedOrders = orders.slice().reverse();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading/>;
 
   // change order status
   const handleStatusChange = async (orderId, newStatus) => {
