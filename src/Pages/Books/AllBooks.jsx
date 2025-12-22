@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "../../Components/Loading";
 import BookCard from "../../Components/BookCard";
 
 const AllBooks = () => {
+  const [searchText, setSearchText] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+
   const {
     data: books = [],
     isLoading,
@@ -16,6 +19,21 @@ const AllBooks = () => {
       return res.data.filter((book) => book.status === "published");
     },
   });
+
+  // Filter and sort books
+  const filteredBooks = useMemo(() => {
+    let filtered = books.filter((book) =>
+      book.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    filtered.sort((a, b) => {
+      if (sortOrder === "asc") return a.price - b.price;
+      else return b.price - a.price;
+    });
+
+    return filtered;
+  }, [books, searchText, sortOrder]);
+
   if (isLoading) return <Loading />;
   if (error) return <p>An error has occurred: {error.message}</p>;
 
@@ -24,6 +42,26 @@ const AllBooks = () => {
       <h1 className="text-center text-2xl font-bold text-gray-900 md:text-4xl">
         All Books
       </h1>
+
+      {/* Search & Sort */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4 px-2">
+        <input
+          type="text"
+          placeholder="Search by book name..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          className="input input-bordered w-full sm:w-1/2"
+        />
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="select select-bordered w-full sm:w-1/4"
+        >
+          <option value="asc">Price: Low to High</option>
+          <option value="desc">Price: High to Low</option>
+        </select>
+      </div>
+
       {books.length === 0 ? (
         <div className="flex justify-center mt-24">
           <div className="flex flex-col items-center text-center border border-dashed border-gray-300 rounded-2xl p-10 max-w-md bg-gray-50 shadow-sm">
@@ -48,7 +86,7 @@ const AllBooks = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-6 gap-8 p-2">
-          {books.map((book) => (
+          {filteredBooks.map((book) => (
             <BookCard key={book._id} book={book} />
           ))}
         </div>
