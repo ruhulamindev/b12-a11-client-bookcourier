@@ -2,13 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
 import axios from "axios";
+import Loading from "../../../Components/Loading";
 
 const MyBooks = () => {
   const { user } = useAuth();
   const [selectedBook, setSelectedBook] = useState(null);
 
   // Fetch seller books
-  const { data: books = [], refetch } = useQuery({
+  const { data: books = [], refetch,isLoading  } = useQuery({
     queryKey: ["my-books", user?.email],
     queryFn: async () => {
       const res = await axios.get(
@@ -22,6 +23,8 @@ const MyBooks = () => {
       return res.data;
     },
   });
+  
+  if (isLoading) return <Loading />;
 
   // update data
   const handleUpdate = async () => {
