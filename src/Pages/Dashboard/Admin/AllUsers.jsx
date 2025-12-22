@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Loading from "../../../Components/Loading";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
   const [requests, setRequests] = useState([]);
-  const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const axiosSecure = useAxiosSecure();
-
+  
   // fetch all users
   useEffect(() => {
     const fetchUsers = async () => {
@@ -16,6 +18,9 @@ const AllUsers = () => {
         setUsers(res.data || []);
       } catch (err) {
         console.error("Failed to fetch users:", err);
+      }
+      finally {
+        setIsFetching(false);
       }
     };
     fetchUsers();
@@ -71,6 +76,7 @@ const AllUsers = () => {
 
   // check if user has pending request
   const hasRequest = (email) => requests.some((r) => r.email === email);
+  if (isFetching) return <Loading />;
 
   return (
     <div className="p-4">
