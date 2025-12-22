@@ -22,7 +22,7 @@ const DetailsPage = () => {
   } = useQuery({
     queryKey: ["book-details", id],
     queryFn: async () => {
-      const result = await axios.get(`http://localhost:3000/books_all/${id}`);
+      const result = await axios.get(`https://b12-a11-server-bookcourier.vercel.app/books_all/${id}`);
       return result.data;
     },
   });
@@ -88,7 +88,7 @@ const DetailsPage = () => {
     try {
       const token = await user.getIdToken();
 
-      await axios.post("http://localhost:3000/orders", orderData, {
+      await axios.post("https://b12-a11-server-bookcourier.vercel.app/orders", orderData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

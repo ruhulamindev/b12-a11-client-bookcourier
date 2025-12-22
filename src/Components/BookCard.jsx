@@ -10,7 +10,7 @@ const BookCard = ({ book }) => {
     const fetchReviews = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3000/reviews?bookId=${book._id}`
+          `https://b12-a11-server-bookcourier.vercel.app/reviews?bookId=${book._id}`
         );
         const data = await res.json();
         setReviewsCount(data.length);

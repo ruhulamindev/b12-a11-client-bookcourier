@@ -36,7 +36,7 @@ const MyOrders = () => {
       const token = await user.getIdToken();
 
       await axios.patch(
-        `http://localhost:3000/orders/cancel/${id}`,
+        `https://b12-a11-server-bookcourier.vercel.app/orders/cancel/${id}`,
         {},
         {
           headers: {
@@ -75,7 +75,7 @@ const MyOrders = () => {
     try {
       const token = await user.getIdToken();
       const { data } = await axios.post(
-        "http://localhost:3000/create-checkout-session",
+        "https://b12-a11-server-bookcourier.vercel.app/create-checkout-session",
         paymentInfo,
         {
           headers: {

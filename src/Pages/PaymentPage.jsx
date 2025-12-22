@@ -9,7 +9,7 @@ const PaymentPage = () => {
 
   useEffect(() => {
     if (sessionId) {
-      axios.post(`http://localhost:3000/payment-success`, { sessionId });
+      axios.post(`https://b12-a11-server-bookcourier.vercel.app/payment-success`, { sessionId });
     }
   }, [sessionId]);
 

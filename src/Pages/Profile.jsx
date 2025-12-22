@@ -19,7 +19,7 @@ const Profile = () => {
     const fetchDbUser = async () => {
       try {
         const token = await user.getIdToken();
-        const res = await axios.get("http://localhost:3000/user/profile", {
+        const res = await axios.get("https://b12-a11-server-bookcourier.vercel.app/user/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDbUser(res.data);
@@ -63,7 +63,7 @@ const Profile = () => {
       // update MongoDB user
       const token = await user.getIdToken();
       await axios.patch(
-        "http://localhost:3000/user/profile/update",
+        "https://b12-a11-server-bookcourier.vercel.app/user/profile/update",
         { name, image: photoURL },
         { headers: { Authorization: `Bearer ${token}` } }
       );

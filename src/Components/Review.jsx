@@ -17,7 +17,7 @@ const Review = ({ bookId }) => {
   const fetchReviews = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/reviews?bookId=${bookId}`
+        `https://b12-a11-server-bookcourier.vercel.app/reviews?bookId=${bookId}`
       );
       setReviews(res.data);
     } catch (err) {
@@ -44,7 +44,7 @@ const Review = ({ bookId }) => {
         createdAt: new Date(),
       };
 
-      await axios.post("http://localhost:3000/reviews", reviewData, {
+      await axios.post("https://b12-a11-server-bookcourier.vercel.app/reviews", reviewData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

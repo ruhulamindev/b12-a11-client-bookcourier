@@ -12,7 +12,7 @@ const MyBooks = () => {
     queryKey: ["my-books", user?.email],
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:3000/books/seller?email=${user.email}`,
+        `https://b12-a11-server-bookcourier.vercel.app/books/seller?email=${user.email}`,
         {
           headers: {
             authorization: `Bearer ${await user.getIdToken()}`,
@@ -58,7 +58,7 @@ const MyBooks = () => {
       };
 
       await axios.patch(
-        `http://localhost:3000/books_all/${selectedBook._id}`,
+        `https://b12-a11-server-bookcourier.vercel.app/books_all/${selectedBook._id}`,
         updatedData
       );
       refetch();
@@ -78,13 +78,13 @@ const MyBooks = () => {
   //   if (!confirmDelete) return;
 
   //   try {
-  //     await axios.delete(`http://localhost:3000/orders/book/${bookId}`, {
+  //     await axios.delete(`https://b12-a11-server-bookcourier.vercel.app/orders/book/${bookId}`, {
   //       headers: {
   //         authorization: `Bearer ${await user.getIdToken()}`,
   //       },
   //     });
 
-  //     await axios.delete(`http://localhost:3000/books_all/${bookId}`, {
+  //     await axios.delete(`https://b12-a11-server-bookcourier.vercel.app/books_all/${bookId}`, {
   //       headers: {
   //         authorization: `Bearer ${await user.getIdToken()}`,
   //       },
