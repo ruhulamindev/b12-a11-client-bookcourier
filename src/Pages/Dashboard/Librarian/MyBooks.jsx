@@ -70,6 +70,34 @@ const MyBooks = () => {
     }
   };
 
+  // // delete book (seller)
+  // const handleDelete = async (bookId) => {
+  //   const confirmDelete = window.confirm(
+  //     "Are you sure you want to delete this book? This will also delete all related orders."
+  //   );
+  //   if (!confirmDelete) return;
+
+  //   try {
+  //     await axios.delete(`http://localhost:3000/orders/book/${bookId}`, {
+  //       headers: {
+  //         authorization: `Bearer ${await user.getIdToken()}`,
+  //       },
+  //     });
+
+  //     await axios.delete(`http://localhost:3000/books_all/${bookId}`, {
+  //       headers: {
+  //         authorization: `Bearer ${await user.getIdToken()}`,
+  //       },
+  //     });
+
+  //     alert("Book and related orders deleted successfully!");
+  //     refetch(); // page refresh
+  //   } catch (error) {
+  //     console.error("Delete error:", error);
+  //     alert("Failed to delete book!");
+  //   }
+  // };
+
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-6">My Books</h1>
@@ -114,12 +142,20 @@ const MyBooks = () => {
                   </span>
                 </td>
                 <td className="py-3 px-4">
-                  <button
-                    onClick={() => setSelectedBook(book)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
-                  >
-                    Update
-                  </button>
+                  {/* <div className="flex items-center gap-2"> */}
+                    <button
+                      onClick={() => setSelectedBook(book)}
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+                    >
+                      Update
+                    </button>
+                    {/* <button
+                      onClick={() => handleDelete(book._id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                    >
+                      Delete
+                    </button>
+                  </div> */}
                 </td>
               </tr>
             ))}

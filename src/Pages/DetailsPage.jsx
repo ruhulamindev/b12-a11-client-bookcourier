@@ -5,12 +5,15 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "./../Hooks/useAuth";
+import { GiSelfLove } from "react-icons/gi";
+import Review from "../Components/Review";
 
 const DetailsPage = () => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   const {
     data: book,
@@ -23,6 +26,30 @@ const DetailsPage = () => {
       return result.data;
     },
   });
+
+  // Wishlist check
+  useState(() => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const exist = wishlist.find((item) => item._id === id);
+    setIsWishlisted(!!exist);
+  }, [id]);
+
+  const toggleWishlist = () => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const exist = wishlist.find((item) => item._id === id);
+
+    if (exist) {
+      const updated = wishlist.filter((item) => item._id !== id);
+      localStorage.setItem("wishlist", JSON.stringify(updated));
+      setIsWishlisted(false);
+      alert("Removed from wishlist");
+    } else {
+      wishlist.push(book);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      setIsWishlisted(true);
+      // alert("Added to wishlist");
+    }
+  };
 
   const {
     register,
@@ -96,8 +123,20 @@ const DetailsPage = () => {
         />
 
         {/* Book Info */}
-        <div>
-          <h1 className="text-3xl font-bold mb-1">{book.name}</h1>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl font-bold mb-1">{book.name}</h1>
+            <button
+              onClick={toggleWishlist}
+              className={`px-2 py-1 rounded-lg border flex items-center justify-center ${
+                isWishlisted
+                  ? "bg-red-500 text-white"
+                  : "bg-gray-100 text-gray-700"
+              }`}
+            >
+              <GiSelfLove className="text-xl" />
+            </button>
+          </div>
 
           <p className="text-gray-600 mb-4">
             <strong>Author:</strong> {book.author}
@@ -255,6 +294,14 @@ const DetailsPage = () => {
               </button>
             </form>
           </div>
+        </div>
+      )}
+
+      {/* Reviews Section */}
+      {book && (
+        <div className="mt-10 bg-white p-6 rounded-xl shadow-lg">
+          <h2 className="text-2xl font-bold mb-4 border-b pb-2">Reviews</h2>
+          <Review bookId={book._id} />
         </div>
       )}
     </div>

@@ -48,13 +48,23 @@ const ManageBooks = () => {
   // delete book
   const handleDelete = async (bookId) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this book?"
+      "Are you sure you want to delete this book? This will also delete all related orders."
     );
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:3000/books_all/${bookId}`);
-      alert("Book deleted successfully!");
+      await axios.delete(`http://localhost:3000/orders/book/${bookId}`, {
+        headers: {
+          authorization: `Bearer ${await user.getIdToken()}`,
+        },
+      });
+
+      await axios.delete(`http://localhost:3000/books_all/${bookId}`, {
+        headers: {
+          authorization: `Bearer ${await user.getIdToken()}`,
+        },
+      });
+      alert("Book and related order deleted successfully!");
       refetch(); // page refresh
     } catch (error) {
       console.error("Delete error:", error);

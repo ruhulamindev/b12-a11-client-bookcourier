@@ -1,93 +1,67 @@
 import React, { useEffect, useState } from "react";
-import { GiSelfLove } from "react-icons/gi";
 import { IoArrowRedoCircleSharp } from "react-icons/io5";
 import { Link } from "react-router";
 
 const BookCard = ({ book }) => {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [reviewsCount, setReviewsCount] = useState(0);
 
-  // check book already in wishlist
   useEffect(() => {
-    // use a microtask to avoid sync setState inside effect
-    const checkWishlist = () => {
-      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-      const exist = wishlist.find((item) => item._id === book._id);
-      setIsWishlisted(!!exist);
+    // fetch reviews count from server
+    const fetchReviews = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:3000/reviews?bookId=${book._id}`
+        );
+        const data = await res.json();
+        setReviewsCount(data.length);
+      } catch (err) {
+        console.log(err);
+      }
     };
-    // schedule after current render
-    setTimeout(checkWishlist, 0);
+    fetchReviews();
   }, [book._id]);
 
-  // toggle wishlist
-  const toggleWishlist = () => {
-    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    const exist = wishlist.find((item) => item._id === book._id);
-
-    if (exist) {
-      // remove
-      const updated = wishlist.filter((item) => item._id !== book._id);
-      localStorage.setItem("wishlist", JSON.stringify(updated));
-      setIsWishlisted(false);
-      alert(`${book.name} removed from wishlist`);
-    } else {
-      // add
-      wishlist.push(book);
-      localStorage.setItem("wishlist", JSON.stringify(wishlist));
-      setIsWishlisted(true);
-      // alert(`${book.name} added to wishlist`);
-    }
-  };
-
   return (
-    <div className="card bg-base-100 shadow-lg">
-      <figure>
-        <img
-          src={book.image}
-          alt={book.name}
-          className="w-full h-60 object-contain bg-gray-100"
-        />
-      </figure>
+    <div className="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <Link to={`/details/${book._id}`}>
+        <figure>
+          <img
+            src={book.image}
+            alt={book.name}
+            className="w-full h-60 object-contain bg-gray-100"
+          />
+        </figure>
 
-      <div className="card-body">
-        <div className="flex items-center justify-between">
-          <h2 className="card-title">
-            {book.name}
-            <div className="badge w-12 h-2 p-2 text-[10px] bg-red-500 border-none badge-secondary">
-              NEW
-            </div>
-          </h2>
-          <h2 className="text-xl font-bold">${book.price}</h2>
-        </div>
-
-        <div className="mb-2">
-          <span className="text-blue-500">{book.category}</span>
-        </div>
-
-        <p>{book.description}</p>
-
-        <div className="card-actions justify-end mt-3 flex items-center gap-3">
-          <div className="flex items-center gap-1 badge badge-outline">
-            <span
-              onClick={toggleWishlist}
-              className={`font-bold flex items-center gap-1 cursor-pointer ${
-                isWishlisted ? "text-red-500" : "text-gray-700"
-              }`}
-            >
-              Wishlist
-              <GiSelfLove className="text-xl" />
-            </span>
+        <div className="card-body">
+          <div className="flex items-center justify-between">
+            <h2 className="card-title">
+              {book.name}
+              <div className="badge w-12 h-2 p-2 text-[10px] bg-red-500 border-none badge-secondary">
+                NEW
+              </div>
+            </h2>
+            <h2 className="text-xl font-bold">${book.price}</h2>
           </div>
-          <div className="flex items-center gap-1 badge badge-outline">
+
+          <div className="mb-2">
+            <span className="text-blue-500">{book.category}</span>
+          </div>
+
+          <p>{book.description}</p>
+
+          <div className="flex justify-between items-center mt-2">
+            <span className="text-sm text-gray-500">
+              {reviewsCount} Reviews
+            </span>
             <Link
+              className="text-red-500 flex items-center gap-1"
               to={`/details/${book._id}`}
-              className="font-bold flex items-center gap-1"
             >
-              Details
-              <IoArrowRedoCircleSharp className="text-xl text-red-500" />
+              Details <IoArrowRedoCircleSharp />
             </Link>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
