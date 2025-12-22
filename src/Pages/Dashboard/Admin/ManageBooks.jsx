@@ -79,7 +79,7 @@ const ManageBooks = () => {
       <h1 className="text-3xl font-bold mb-6">Manage Books</h1>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg shadow">
+        <table className="min-w-full bg-white rounded-lg shadow whitespace-nowrap">
           <thead className="bg-gray-100">
             <tr>
               <th className="py-3 px-4 text-left">Image</th>
