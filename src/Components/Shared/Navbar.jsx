@@ -45,6 +45,43 @@ const Navbar = () => {
       </li>
     </>
   );
+    const authButtons = user ? (
+    <div className="dropdown dropdown-end">
+      <img
+        tabIndex={0}
+        src={user.photoURL}
+        alt="profile"
+        className="w-10 h-10 rounded-full cursor-pointer border"
+      />
+      <ul
+        tabIndex={0}
+        className="dropdown-content menu p-4 shadow app-card rounded-box w-56 z-20"
+      >
+        <li className="mb-4 border-b pb-4">
+          <p className="font-bold">{user.displayName}</p>
+          <p className="text-xs">{user.email}</p>
+        </li>
+        <li className="mb-2 border rounded">
+          <NavLink to="/profile">Profile</NavLink>
+        </li>
+        <li className="mb-2 border rounded">
+          <button onClick={handleSignOut} className="text-red-500">
+            Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  ) : (
+    <>
+      <NavLink to="/signin" className="btn hidden lg:inline-block">
+        Signin
+      </NavLink>
+      <NavLink to="/signup" className="btn hidden lg:inline-block">
+        Signup
+      </NavLink>
+    </>
+  ); 
+  
   return (
     <div className="navbar px-4 w-full app-card shadow-sm fixed top-0 left-0 z-50">
       <div className="navbar-start">
@@ -71,6 +108,16 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             {links}
+            {!user && (
+              <>
+                <li>
+                  <NavLink to="/signin">Signin</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/signup">Signup</NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
         <Logo />
@@ -114,45 +161,8 @@ const Navbar = () => {
           </div>
         </div>
 
-        {user ? (
-          <div className="dropdown dropdown-end">
-            <img
-              tabIndex={0}
-              src={user.photoURL}
-              alt="profile"
-              className="w-10 h-10 rounded-full cursor-pointer border"
-            />
-
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu p-4 shadow  app-card rounded-box w-56 z-20"
-            >
-              <li className="mb-4 border-b pb-4">
-                <p className="font-bold">{user.displayName}</p>
-                <p className="text-xs">{user.email}</p>
-              </li>
-
-              <li className="mb-2 border rounded">
-                <NavLink to="/profile">Profile</NavLink>
-              </li>
-
-              <li className="mb-2 border rounded">
-                <button onClick={handleSignOut} className="text-red-500">
-                  Logout
-                </button>
-              </li>
-            </ul>
-          </div>
-        ) : (
-          <>
-            <NavLink to="/signin" className="btn">
-              Signin
-            </NavLink>
-            <NavLink to="/signup" className="btn">
-              Signup
-            </NavLink>
-          </>
-        )}
+        {/* Auth Buttons / Profile */}
+        {authButtons}
       </div>
     </div>
   );
