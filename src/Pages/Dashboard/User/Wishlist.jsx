@@ -16,15 +16,15 @@ const Wishlist = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 app-card">
       <h1 className="text-3xl font-bold mb-6">My Wishlist</h1>
 
       {wishlist.length === 0 ? (
         <p className="text-gray-500">No books in your wishlist</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white rounded-lg shadow whitespace-nowrap">
-            <thead className="bg-gray-100">
+          <table className="min-w-full app-card rounded-lg shadow whitespace-nowrap">
+            <thead className="app-card">
               <tr>
                 <th className="py-3 px-4 text-left">Image</th>
                 <th className="py-3 px-4 text-left">Name</th>
@@ -37,7 +37,7 @@ const Wishlist = () => {
               {wishlist.map((item) => (
                 <tr
                   key={item._id}
-                  className="border-b hover:bg-gray-50 transition-colors"
+                  className="border-b  transition-colors"
                 >
                   <td className="py-3 px-4">
                     <img

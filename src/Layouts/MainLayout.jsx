@@ -1,17 +1,20 @@
-import React from 'react';
-import { Outlet } from 'react-router';
-import Navbar from '../Components/Shared/Navbar';
-import Footer from '../Components/Shared/Footer';
-
+import React from "react";
+import { Outlet } from "react-router";
+import Navbar from "../Components/Shared/Navbar";
+import Footer from "../Components/Shared/Footer";
 
 const MainLayout = () => {
-    return (
-    <div className="max-w-7xl mx-auto bg-[#f7f7ff]">
+  return (
+    <>
       <Navbar />
-        <Outlet />
+      <div className="pt-16 min-h-screen">
+        <div className="max-w-7xl mx-auto px-4">
+          <Outlet />
+        </div>
+      </div>
       <Footer />
-    </div>
-    );
+    </>
+  );
 };
 
 export default MainLayout;

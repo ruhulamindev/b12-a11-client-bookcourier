@@ -61,13 +61,13 @@ const CustomerStats = () => {
         {stats.map((item, i) => (
           <div
             key={i}
-            className="p-4 bg-white rounded-xl shadow flex gap-4"
+            className="p-4 app-card rounded-xl shadow flex gap-4"
           >
             <div className={`p-4 rounded-full ${item.bg}`}>
               {item.icon}
             </div>
             <div>
-              <p className="text-gray-500">{item.title}</p>
+              <p className=" ">{item.title}</p>
               <h2 className="text-xl font-bold">{item.value}</h2>
             </div>
           </div>
@@ -75,7 +75,7 @@ const CustomerStats = () => {
       </div>
 
       {/* pie chart section */}
-      <div className="bg-white p-6 rounded-xl shadow">
+      <div className="app-card p-6 rounded-xl shadow">
         <h2 className="text-xl font-bold mb-4 text-center">
           Orders vs Invoices
         </h2>

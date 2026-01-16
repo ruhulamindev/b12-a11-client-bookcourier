@@ -55,8 +55,8 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="mt-12 max-w-7xl mx-auto px-2">
-      <h2 className="text-center text-3xl font-bold mb-8 text-gray-900">
+    <div className="mt-12 max-w-7xl app-card mx-auto py-5 px-2">
+      <h2 className="text-center text-3xl font-bold mb-8 ">
         What Our Users Say
       </h2>
 
@@ -75,7 +75,8 @@ const Testimonials = () => {
       >
         {reviews.map((rev, index) => (
           <SwiperSlide key={index}>
-            <div className="card bg-base-100 shadow-lg p-4 m-2 flex flex-col justify-between">
+            
+            <div className="card app-card shadow-lg p-4 m-2 flex flex-col justify-between">
               <div>
                 <div className="flex items-center mb-4">
                   <img
@@ -85,10 +86,10 @@ const Testimonials = () => {
                   />
                   <div>
                     <h3 className="text-xl font-semibold">{rev.name}</h3>
-                    <p className="text-sm text-gray-500">{rev.company}</p>
+                    <p className="text-sm">{rev.company}</p>
                   </div>
                 </div>
-                <p className="text-gray-700">{rev.review}</p>
+                <p className="">{rev.review}</p>
               </div>
             </div>
           </SwiperSlide>

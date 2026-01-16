@@ -92,13 +92,13 @@ const MyOrders = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 app-card">
       <h1 className="text-3xl font-bold mb-6">My Orders</h1>
 
-      <div className="overflow-x-auto bg-white shadow-md rounded-xl p-4">
+      <div className="overflow-x-auto app-card shadow-md rounded-xl p-4">
         <table className="min-w-full border-collapse whitespace-nowrap">
           <thead>
-            <tr className="bg-gray-100 text-left">
+            <tr className=" app-card text-left">
               <th className="p-3 font-semibold">Image</th>
               <th className="p-3 font-semibold">Book Title</th>
               <th className="p-3 font-semibold">Category</th>
@@ -114,7 +114,7 @@ const MyOrders = () => {
 
           <tbody>
             {sortedOrders.map((item) => (
-              <tr key={item._id} className="border-b hover:bg-gray-50">
+              <tr key={item._id} className="border-b">
                 <td className="p-3">
                   <img
                     src={item.bookImage}

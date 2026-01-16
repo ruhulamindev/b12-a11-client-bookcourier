@@ -38,8 +38,8 @@ const AllBooks = () => {
   if (error) return <p>An error has occurred: {error.message}</p>;
 
   return (
-    <div className="min-h-screen mt-12 max-w-7xl mx-auto">
-      <h1 className="text-center text-2xl font-bold text-gray-900 md:text-4xl">
+    <div className="mt-4 py-5 px-2 shadow app-card min-h-screen max-w-7xl mx-auto">
+      <h1 className="text-center text-2xl font-bold  md:text-4xl">
         All Books
       </h1>
 

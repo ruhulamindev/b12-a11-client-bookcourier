@@ -140,10 +140,10 @@ const AdminStats = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {stats.map((item, i) => (
-          <div key={i} className="p-4 bg-white rounded-xl shadow flex gap-4">
+          <div key={i} className="p-4  app-card rounded-xl shadow flex gap-4">
             <div className={`p-4 rounded-full ${item.bg}`}>{item.icon}</div>
             <div>
-              <p className="text-gray-500">{item.title}</p>
+              <p>{item.title}</p>
               <h2 className="text-xl font-bold">{item.value}</h2>
             </div>
           </div>
@@ -151,12 +151,12 @@ const AdminStats = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white p-6 rounded-xl shadow">
+        <div className="  app-card p-6 rounded-xl shadow">
           <h2 className="text-xl font-bold mb-4">Order Status</h2>
           <Pie data={pieData} />
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow">
+        <div className=" app-card  p-6 rounded-xl shadow">
           <h2 className="text-xl font-bold mb-4">Monthly Orders & Revenue</h2>
           <Bar data={barData} />
         </div>

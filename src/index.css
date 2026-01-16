@@ -1,11 +1,49 @@
 @import "tailwindcss";
- @plugin "daisyui" {
-   themes: light --default;
- }
+@plugin "daisyui" {
+  themes: light --default, dark, cupcake;
+}
+:root {
+  --bg-color: #FAFAFA;
+  --text-color: #111111;
+  --card-bg: #ffffff;
+  --border-color: #e5e7eb; 
+}
 
- @plugin "daisyui/theme" {
-  name: "light";
-  default: true;
-  --color-primary: #CAEB66;
-  --color-secondary: #03373D;
+.dark {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --card-bg: #0f172a; 
+  --border-color: #1f2937;
+}
+
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+.app-card {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+input,
+select,
+textarea {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #a855f7;
 }

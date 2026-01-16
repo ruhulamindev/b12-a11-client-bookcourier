@@ -22,7 +22,9 @@ const DetailsPage = () => {
   } = useQuery({
     queryKey: ["book-details", id],
     queryFn: async () => {
-      const result = await axios.get(`https://b12-a11-server-bookcourier.vercel.app/books_all/${id}`);
+      const result = await axios.get(
+        `https://b12-a11-server-bookcourier.vercel.app/books_all/${id}`
+      );
       return result.data;
     },
   });
@@ -88,11 +90,15 @@ const DetailsPage = () => {
     try {
       const token = await user.getIdToken();
 
-      await axios.post("https://b12-a11-server-bookcourier.vercel.app/orders", orderData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(
+        "https://b12-a11-server-bookcourier.vercel.app/orders",
+        orderData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       alert("Order placed successfully!");
       setOpen(false);
@@ -105,12 +111,12 @@ const DetailsPage = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="grid md:grid-cols-2 gap-8 bg-white p-6 rounded-xl shadow">
+    <div className="max-w-4xl app-card mt-4 py-5 px-2  mx-auto">
+      <div className="grid md:grid-cols-2 gap-8 p-6 rounded-xl shadow">
         <div className="md:col-span-2">
           <button
             onClick={() => navigate("/all-books")}
-            className="mb-4 px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg font-semibold"
+            className="mb-4 px-4 py-2 border hover:bg-gray-400 rounded-lg font-semibold"
           >
             ← Back to All Books
           </button>
@@ -138,11 +144,11 @@ const DetailsPage = () => {
             </button>
           </div>
 
-          <p className="text-gray-600 mb-4">
+          <p className="  mb-4">
             <strong>Author:</strong> {book.author}
           </p>
 
-          <p className="text-gray-700 text-lg mb-4">{book.description}</p>
+          <p className=" text-lg mb-4">{book.description}</p>
 
           <p className="mb-2">
             <strong>Category: </strong>
@@ -180,18 +186,19 @@ const DetailsPage = () => {
 
       {/* Modal */}
       {open && (
-        <div className="fixed inset-0 bg-amber-200 bg-opacity-40 flex items-center justify-center z-50 overflow-auto py-10">
-          <div className="bg-white w-96 p-6 rounded-xl shadow-lg relative">
+        <div className="fixed bg-[#0f172a]/95 inset-0 flex items-center justify-center z-50 overflow-auto p-4">
+          <div className="app-card w-full max-w-md p-6 rounded-xl shadow-lg relative mx-auto my-10 ">
+            {/* Close button */}
             <button
-              className="absolute top-2 right-3 text-xl font-bold"
+              className="absolute top-2 right-3 text-2xl font-bold  "
               onClick={() => setOpen(false)}
             >
               ×
             </button>
 
-            <h2 className="text-2xl font-bold mb-4">Place Your Order</h2>
+            <h2 className="text-2xl font-bold mb-4  ">Place Your Order</h2>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="  space-y-4">
               {/* Name */}
               <div>
                 <label className="block font-semibold mb-1">Name*</label>
@@ -238,7 +245,7 @@ const DetailsPage = () => {
                     required: "Quantity is required",
                     min: { value: 1, message: "Minimum quantity is 1" },
                     validate: (value) =>
-                      value > 0 || "Quantity must be a positive number",
+                      value > 0 || "Quantity must be positive",
                   })}
                   className="input input-bordered w-full"
                   onChange={(e) => {
@@ -299,7 +306,7 @@ const DetailsPage = () => {
 
       {/* Reviews Section */}
       {book && (
-        <div className="mt-10 bg-white p-6 rounded-xl shadow-lg">
+        <div className="mt-10  app-card p-6 rounded-xl shadow-lg">
           <h2 className="text-2xl font-bold mb-4 border-b pb-2">Reviews</h2>
           <Review bookId={book._id} />
         </div>

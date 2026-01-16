@@ -81,9 +81,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center gap-6 w-full max-w-sm">
-        <div className="flex flex-col items-center">
+    <div className="min-h-screen flex items-center justify-center app-card p-4">
+      <div className="app-card rounded-2xl shadow-lg p-8 flex flex-col items-center gap-6 w-full max-w-sm">
+        <div className="flex app-card flex-col items-center">
           {/* profile image */}
           <img
             src={
@@ -113,7 +113,7 @@ const Profile = () => {
         </div>
 
         {/* name */}
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-bold">
           {user?.displayName || "User Name"}
         </h2>
 
@@ -131,10 +131,10 @@ const Profile = () => {
 
       {/* update modal */}
       {open && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+        <div className="fixed  inset-0 bg-black/70 flex items-center justify-center z-50">
           <form
             onSubmit={handleUpdate}
-            className="bg-white p-6 rounded-xl w-full max-w-md space-y-4"
+            className="app-card p-6 rounded-xl w-full max-w-md space-y-4"
           >
             <h2 className="text-xl font-bold text-center">Update Profile</h2>
 

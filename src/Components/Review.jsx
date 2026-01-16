@@ -60,14 +60,14 @@ const Review = ({ bookId }) => {
   };
 
   return (
-    <div className="mt-8">
-      <h2 className="text-2xl font-bold mb-4">Reviews</h2>
+    <div className="mt-8 app-card ">
+      <h2 className="text-2xl px-4 py-2 app-card font-bold mb-4">Review</h2>
 
       {/* Review Form */}
       {user && (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mb-6 p-4 bg-gray-100 rounded-lg"
+          className="mb-6 p-4  app-card rounded-lg"
         >
           <div className="mb-2">
             <label className="block font-semibold">Rating (1-5)</label>
@@ -105,16 +105,16 @@ const Review = ({ bookId }) => {
       )}
 
       {/* Reviews List */}
-      <div>
+      <div className=" app-card ">
         {reviews.length === 0 ? (
-          <p className="text-gray-500">No reviews yet.</p>
+          <p className="px-4 py-2">No reviews yet.</p>
         ) : (
           reviews
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((rev) => (
               <div
                 key={rev._id}
-                className="mb-4 p-3 border rounded-lg bg-gray-50"
+                className="mb-4 p-3 rounded-lg"
               >
                 <p className="font-semibold">{rev.reviewer.name}</p>
                 <p>Rating: {rev.rating} / 5</p>

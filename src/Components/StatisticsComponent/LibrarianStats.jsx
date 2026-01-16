@@ -60,13 +60,13 @@ const LibrarianStats = () => {
   ];
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">Librarian Dashboard</h1>
+    <div className="app-card">
+      <h1 className="text-3xl font-bold pl-2 mb-6">Librarian Dashboard</h1>
 
       {/* stats cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         {stats.map((item, i) => (
-          <div key={i} className="p-4 bg-white rounded-xl shadow flex gap-4">
+          <div key={i} className="p-4 app-card rounded-xl shadow flex gap-4">
             <div className={`p-4 rounded-full ${item.bg}`}>{item.icon}</div>
             <div>
               <p className="text-gray-500">{item.title}</p>
@@ -77,7 +77,7 @@ const LibrarianStats = () => {
       </div>
 
       {/* pie chart */}
-      <div className="bg-white p-6 rounded-xl shadow">
+      <div className="app-card p-6 rounded-xl shadow">
         <h2 className="text-xl font-bold mb-4 text-center">
           Books vs Orders
         </h2>

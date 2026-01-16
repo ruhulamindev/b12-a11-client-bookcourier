@@ -18,12 +18,12 @@ const Invoices = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="p-4">
+    <div className="p-4 app-card">
       <h1 className="text-3xl font-bold mb-6">My Invoices</h1>
 
-      <div className="overflow-x-auto bg-white rounded-xl shadow whitespace-nowrap">
+      <div className="overflow-x-autoa pp-card rounded-xl shadow whitespace-nowrap">
         <table className="min-w-full">
-          <thead className="bg-gray-100">
+          <thead className="app-card">
             <tr>
               <th className="py-3 px-4 text-left">Payment ID</th>
               <th className="py-3 px-4 text-left">Book Name</th>
@@ -44,7 +44,7 @@ const Invoices = () => {
               invoices.map((invoice) => (
                 <tr
                   key={invoice._id}
-                  className="border-b hover:bg-gray-50 transition-colors"
+                  className="border-b  transition-colors"
                 >
                   <td className="py-3 px-4">{invoice.transactionId}</td>
                   <td className="py-3 px-4">{invoice.bookName}</td>

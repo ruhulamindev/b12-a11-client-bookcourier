@@ -2,12 +2,12 @@ import React from "react";
 
 const DeliveryCoverage = () => {
   return (
-    <div className="mt-12 max-w-7xl mx-auto p-2">
+    <div className="mt-12 app-card border max-w-7xl mx-auto py-5 px-2">
       {/* Section Heading */}
       <h2 className="text-2xl md:text-4xl font-bold text-center mb-6">
         Delivery Coverage
       </h2>
-      <p className="text-center mb-6 text-gray-700">
+      <p className="text-center mb-6">
         We deliver books to the following cities in Bangladesh:
       </p>
 

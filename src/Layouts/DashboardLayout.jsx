@@ -27,7 +27,7 @@ const SidebarItem = ({ item, setIsOpen }) => {
         onClick={() => setIsOpen(false)}
         className={({ isActive }) =>
           `block p-2 rounded-lg ${
-            isActive ? "bg-blue-500 text-white" : "hover:bg-gray-200"
+            isActive ? "bg-blue-500 text-white" : "hover:bg-gray-400"
           }`
         }
       >
@@ -100,9 +100,9 @@ const DashboardLayout = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-300">
+    <div className="flex min-h-screen  app-card ">
       {/* sidebar top logo */}
-      <div className="lg:hidden w-full bg-white shadow p-4 flex justify-between items-center fixed z-50">
+      <div className="lg:hidden w-full shadow p-4 flex justify-between items-center fixed z-50">
         <Logo />
         <button onClick={() => setIsOpen(true)}>
           <FaBars className="text-2xl" />
@@ -111,7 +111,7 @@ const DashboardLayout = () => {
 
       {/* left sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-screen overflow-y-auto w-64 bg-white shadow-lg p-6 transform transition-transform duration-300 
+        className={`fixed top-0 left-0 h-screen overflow-y-auto w-64   app-card  shadow-lg p-6 transform transition-transform duration-300 
         ${isOpen ? "translate-x-0" : "-translate-x-full"} 
         lg:translate-x-0 lg:static lg:block z-50`}
       >
@@ -152,7 +152,7 @@ const DashboardLayout = () => {
           {/* Logout */}
           <button
             onClick={handleSignOut}
-            className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-bold"
+            className="w-full bg-red-500 hover:bg-red-600  py-2 rounded-lg font-bold"
           >
             Logout
           </button>
@@ -169,7 +169,7 @@ const DashboardLayout = () => {
 
       {/* right content */}
       <main className="flex-1 p-6 mt-16 h-screen overflow-y-auto lg:mt-0">
-        <div className="bg-[#e9ecef] rounded-lg shadow p-2">
+        <div className=" app-card rounded-lg shadow p-2">
           <Outlet />
         </div>
       </main>

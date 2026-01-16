@@ -75,12 +75,12 @@ const ManageBooks = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="p-4">
+    <div className="p-4 app-card">
       <h1 className="text-3xl font-bold mb-6">Manage Books</h1>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg shadow whitespace-nowrap">
-          <thead className="bg-gray-100">
+      <div className="overflow-x-auto app-card">
+        <table className="min-w-full app-card rounded-lg shadow whitespace-nowrap">
+          <thead className="app-card">
             <tr>
               <th className="py-3 px-4 text-left">Image</th>
               <th className="py-3 px-4 text-left">Name</th>
@@ -94,7 +94,7 @@ const ManageBooks = () => {
             {books.map((book) => (
               <tr
                 key={book._id}
-                className="border-b hover:bg-gray-50 transition-colors"
+                className="border-b transition-colors"
               >
                 <td className="py-3 px-4">
                   <img
@@ -132,7 +132,7 @@ const ManageBooks = () => {
       {/* Modal for Update */}
       {selectedBook && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded w-full max-w-md">
+          <div className="app-card p-6 rounded w-full max-w-md">
             <h2 className="text-xl font-bold mb-4">Update Book</h2>
 
             <label className="block font-medium mb-1">Name</label>

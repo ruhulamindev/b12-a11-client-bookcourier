@@ -71,8 +71,8 @@ const Signin = () => {
   };
 
   return (
-    <div className="min-h-[70vh] mx-auto flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-gray-100 rounded-2xl shadow-lg p-8">
+    <div className="min-h-[70vh] mx-auto mt-4 app-card flex items-center justify-center p-4">
+      <div className="w-full max-w-md  app-card rounded-2xl shadow-lg p-8">
         {/* Title */}
         <h1 className="text-2xl font-bold text-center mb-6">Sign In</h1>
 

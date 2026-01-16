@@ -79,12 +79,12 @@ const [loading, setLoading] = useState(false);
   if (isFetching) return <Loading />;
 
   return (
-    <div className="p-4">
+    <div className="p-4  app-card">
       <h1 className="text-3xl font-bold mb-6">All Users</h1>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg whitespace-nowrap shadow">
-          <thead className="bg-gray-100">
+        <table className="min-w-full  app-card rounded-lg whitespace-nowrap shadow">
+          <thead className=" app-card ">
             <tr>
               <th className="py-3 px-4 text-left">Name</th>
               <th className="py-3 px-4 text-left">Email</th>
@@ -100,7 +100,7 @@ const [loading, setLoading] = useState(false);
                 .map((user) => (
                   <tr
                     key={user._id}
-                    className="border-b hover:bg-gray-50 transition-colors"
+                    className="border-b transition-colors"
                   >
                     <td className="py-3 px-4">{user.name}</td>
                     <td className="py-3 px-4">{user.email}</td>

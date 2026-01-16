@@ -6,7 +6,7 @@ import { Link } from "react-router";
 
 const Banner = () => {
   return (
-    <div className="max-w-7xl mx-auto mt-4 p-2">
+    <div className="max-w-7xl app-card mx-auto mt-4 py-5 px-2">
       <div className="lg:rounded-lg rounded-none overflow-hidden">
         <Carousel
           showThumbs={false}

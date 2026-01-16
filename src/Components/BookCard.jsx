@@ -22,13 +22,13 @@ const BookCard = ({ book }) => {
   }, [book._id]);
 
   return (
-    <div className="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <div className="card app-card shadow-lg hover:shadow-xl transition-shadow duration-300">
       <Link to={`/details/${book._id}`}>
         <figure>
           <img
             src={book.image}
             alt={book.name}
-            className="w-full h-60 object-contain bg-gray-100"
+            className="w-full h-60 object-contain "
           />
         </figure>
 
@@ -50,7 +50,7 @@ const BookCard = ({ book }) => {
           <p>{book.description}</p>
 
           <div className="flex justify-between items-center mt-2">
-            <span className="text-sm text-gray-500">
+            <span className="text-sm ">
               {reviewsCount} Reviews
             </span>
             <Link

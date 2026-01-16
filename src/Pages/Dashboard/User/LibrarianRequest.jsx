@@ -29,7 +29,7 @@ const LibrarianRequest = () => {
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto bg-white rounded-xl shadow">
+    <div className="p-6 max-w-xl mx-auto app-card rounded-xl shadow">
       <h1 className="text-3xl font-bold mb-6 text-center">
         Request to Become Librarian
       </h1>
