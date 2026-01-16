@@ -45,7 +45,7 @@ const Navbar = () => {
       </li>
     </>
   );
-    const authButtons = user ? (
+  const authButtons = user ? (
     <div className="dropdown dropdown-end">
       <img
         tabIndex={0}
@@ -73,15 +73,22 @@ const Navbar = () => {
     </div>
   ) : (
     <>
-      <NavLink to="/signin" className="btn hidden lg:inline-block">
+      {/* Desktop Signin/Signup Buttons */}
+      <NavLink
+        to="/signin"
+        className="btn hidden lg:inline-flex items-center justify-center h-10 px-4 text-sm font-medium"
+      >
         Signin
       </NavLink>
-      <NavLink to="/signup" className="btn hidden lg:inline-block">
+      <NavLink
+        to="/signup"
+        className="btn hidden lg:inline-flex items-center justify-center h-10 px-4 text-sm font-medium"
+      >
         Signup
       </NavLink>
     </>
-  ); 
-  
+  );
+
   return (
     <div className="navbar px-4 w-full app-card shadow-sm fixed top-0 left-0 z-50">
       <div className="navbar-start">
